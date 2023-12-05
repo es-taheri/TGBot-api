@@ -1,0 +1,36 @@
+{
+    "name": "estaheri/easytel",
+    "description": "An easy to use php library for using telegram bot api",
+    "version": "1.0.0",
+    "type": "library",
+    "keywords": [
+        "telegram",
+        "telegram bot api",
+        "easy telegram sdk",
+        "telegram bot library",
+        "easy to use telegram",
+        "telegram bot api sdk"
+    ],
+    "homepage": "https://github.com/es-taheri/easytel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Esmaeil Taheri",
+            "email": "ta.es1383@gmail.com",
+            "homepage": "https://github.com/es-taheri",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.8",
+        "nette/utils": "^4.0",
+        "filp/whoops": "^2.15"
+    },
+    "autoload": {
+        "psr-4": {
+            "EasyTel\\":"",
+            "EasyTel\\core":"core/",
+            "EasyTel\\types":"types/"
+        }
+    }
+}
