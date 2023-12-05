@@ -29,8 +29,8 @@
     "autoload": {
         "psr-4": {
             "EasyTel\\":"",
-            "EasyTel\\core":"core/",
-            "EasyTel\\types":"types/"
+            "EasyTel\\core\\":"core/",
+            "EasyTel\\types\\":"types/"
         }
     }
 }
