@@ -1,7 +1,6 @@
 {
     "name": "estaheri/easytel",
     "description": "An easy to use php library for using telegram bot api",
-    "version": "1.0.0",
     "type": "library",
     "keywords": [
         "telegram",
