@@ -18,7 +18,11 @@ class KeyboardButton
     {
         $objects = array_keys($update);
         foreach ($objects as $object):
-            $this->{$object} = $update[$object];
+            $reflection = new \ReflectionClass(__CLASS__);
+            $property = $reflection->getProperty($object);
+            $type = $property->gettype()->getName();
+            if (in_array(strtolower($type), ['bool', 'int', 'string', 'array', 'true', 'object', 'json|string','float']))
+                $this->{$object} = $update[$object];
         endforeach;
         if (isset($update['request_user'])) $this->request_user = new KeyboardButtonRequestUser($update['request_user']);
         if (isset($update['request_chat'])) $this->request_chat = new KeyboardButtonRequestChat($update['request_chat']);

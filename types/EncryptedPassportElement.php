@@ -21,7 +21,11 @@ class EncryptedPassportElement
     {
         $objects = array_keys($update);
         foreach ($objects as $object):
-            $this->{$object} = $update[$object];
+            $reflection = new \ReflectionClass(__CLASS__);
+            $property = $reflection->getProperty($object);
+            $type = $property->gettype()->getName();
+            if (in_array(strtolower($type), ['bool', 'int', 'string', 'array', 'true', 'object', 'json|string','float']))
+                $this->{$object} = $update[$object];
         endforeach;
         if (isset($update['front_side'])) $this->front_side = new PassportFile($update['front_side']);
         if (isset($update['reverse_side'])) $this->reverse_side = new PassportFile($update['reverse_side']);
