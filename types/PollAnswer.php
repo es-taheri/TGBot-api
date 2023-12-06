@@ -15,7 +15,11 @@ class PollAnswer
     {
         $objects = array_keys($update);
         foreach ($objects as $object):
-            $this->{$object} = $update[$object];
+            $reflection = new \ReflectionClass(__CLASS__);
+            $property = $reflection->getProperty($object);
+            $type = $property->gettype()->getName();
+            if (in_array(strtolower($type), ['bool', 'int', 'string', 'array', 'true', 'object', 'json|string','float']))
+                $this->{$object} = $update[$object];
         endforeach;
         if (isset($update['voter_chat'])) $this->voter_chat = new Chat($update['voter_chat']);
         if (isset($update['user'])) $this->user = new User($update['user']);
