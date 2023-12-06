@@ -29,7 +29,11 @@ class telegram
         int    $timeout = null, Json|string $allowed_updates = null
     ): mixed
     {
-        $methods=new methods($bot_token, $botapi_url, $method, $request_timeout,$output);
-        return $methods->getUpdates($offset,$limit,$timeout,$allowed_updates);
+        $methods = new methods($bot_token, $botapi_url, $method, $request_timeout, $output);
+        $result = $methods->getUpdates($offset, $limit, $timeout, $allowed_updates);
+        if ($result['success'])
+            return $result['response'];
+        else
+            return $result;
     }
 }
