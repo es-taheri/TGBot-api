@@ -14,18 +14,20 @@ class methods
 {
     private string $method;
     public int $output;
+    private string $bot_token;
     private Client $guzzle;
     public const OUTPUT_JSON = 111;
     public const OUTPUT_OBJECT = 112;
     public const OUTPUT_ARRAY = 113;
 
-    public function __construct(string $bot_token,string $botapi_url,string $method,int $timeout,$output = self::OUTPUT_OBJECT)
+    public function __construct(string $bot_token, string $botapi_url = 'https://api.telegram.org', string $method = 'POST', int $timeout = 5, $output = self::OUTPUT_OBJECT)
     {
         $this->guzzle = new Client([
-            'base_uri' => $botapi_url . '/bot' . $bot_token,
+            'base_uri' => $botapi_url,
             'timeout' => $timeout
         ]);
-        $this->method=$method;
+        $this->bot_token = $bot_token;
+        $this->method = $method;
         $this->output = $output;
     }
     // https://core.telegram.org/bots/api#getting-updates
@@ -44,7 +46,7 @@ class methods
         int $offset = null, int $limit = null, int $timeout = null, Json|string $allowed_updates = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -67,7 +69,7 @@ class methods
         Json|string $allowed_updates = null, bool $drop_pending_updates = null, string $secret_token = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -79,7 +81,7 @@ class methods
      */
     public function deleteWebhook(bool $drop_pending_updates = null): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -91,7 +93,7 @@ class methods
      */
     public function getWebhookInfo(): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     // https://core.telegram.org/bots/api#available-methods
@@ -105,7 +107,7 @@ class methods
      */
     public function getMe(): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -119,7 +121,7 @@ class methods
      */
     public function logOut(): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -133,7 +135,7 @@ class methods
      */
     public function close(): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -159,7 +161,7 @@ class methods
         int    $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -180,7 +182,7 @@ class methods
         bool       $protect_content = null, int $message_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -210,7 +212,7 @@ class methods
         int        $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -237,7 +239,7 @@ class methods
         int         $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -271,7 +273,7 @@ class methods
         int         $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -301,7 +303,7 @@ class methods
         bool       $allow_sending_without_reply = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -336,7 +338,7 @@ class methods
         bool        $allow_sending_without_reply = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -371,7 +373,7 @@ class methods
         Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -403,7 +405,7 @@ class methods
         int         $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -431,7 +433,7 @@ class methods
         int        $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -456,7 +458,7 @@ class methods
         Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -482,7 +484,7 @@ class methods
         int|string $chat_id, int $message_thread_id = null, float $latitude, float $longitude, float $horizontal_accuracy = null, int $live_period = null, int $heading = null, int $proximity_alert_radius = null, bool $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -510,7 +512,7 @@ class methods
         int|string $chat_id, int $message_thread_id = null, float $latitude, float $longitude, string $title, string $address, string $foursquare_id = null, string $foursquare_type = null, string $google_place_id = null, string $google_place_type = null, bool $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -534,7 +536,7 @@ class methods
         int|string $chat_id, int $message_thread_id = null, string $phone_number, string $first_name, string $last_name = null, string $vcard = null, bool $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -566,7 +568,7 @@ class methods
         int|string $chat_id, int $message_thread_id = null, string $question, Json|string $options, bool $is_anonymous = null, string $type = null, bool $allows_multiple_answers = null, int $correct_option_id = null, string $explanation = null, string $explanation_parse_mode = null, Json|string $explanation_entities = null, int $open_period = null, int $close_date = null, bool $is_closed = null, bool $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -587,7 +589,7 @@ class methods
         int|string $chat_id, int $message_thread_id = null, string $emoji = null, bool $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -603,7 +605,7 @@ class methods
         int|string $chat_id, int $message_thread_id = null, string $action
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -619,7 +621,7 @@ class methods
         int $user_id, int $offset = null, int $limit = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -633,7 +635,7 @@ class methods
         string $file_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -650,7 +652,7 @@ class methods
         int|string $chat_id, int $user_id, int $until_date = null, bool $revoke_messages = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -666,7 +668,7 @@ class methods
         int|string $chat_id, int $user_id, bool $only_if_banned = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -684,7 +686,7 @@ class methods
         int|string $chat_id, int $user_id, Json|string $permissions, bool $use_independent_chat_permissions = null, int $until_date = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -714,7 +716,7 @@ class methods
         int|string $chat_id, int $user_id, bool $is_anonymous = null, bool $can_manage_chat = null, bool $can_delete_messages = null, bool $can_manage_video_chats = null, bool $can_restrict_members = null, bool $can_promote_members = null, bool $can_change_info = null, bool $can_invite_users = null, bool $can_post_messages = null, bool $can_edit_messages = null, bool $can_pin_messages = null, bool $can_post_stories = null, bool $can_edit_stories = null, bool $can_delete_stories = null, bool $can_manage_topics = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -730,7 +732,7 @@ class methods
         int|string $chat_id, int $user_id, string $custom_title
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -745,7 +747,7 @@ class methods
         int|string $chat_id, int $sender_chat_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -760,7 +762,7 @@ class methods
         int|string $chat_id, int $sender_chat_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -776,7 +778,7 @@ class methods
         int|string $chat_id, Json|string $permissions, bool $use_independent_chat_permissions = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -790,7 +792,7 @@ class methods
         int|string $chat_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -808,7 +810,7 @@ class methods
         int|string $chat_id, string $name = null, int $expire_date = null, int $member_limit = null, bool $creates_join_request = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -827,7 +829,7 @@ class methods
         int|string $chat_id, string $invite_link, string $name = null, int $expire_date = null, int $member_limit = null, bool $creates_join_request = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -842,7 +844,7 @@ class methods
         int|string $chat_id, string $invite_link
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -857,7 +859,7 @@ class methods
         int|string $chat_id, int $user_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -872,7 +874,7 @@ class methods
         int|string $chat_id, int $user_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -887,7 +889,7 @@ class methods
         int|string $chat_id, mixed $photo
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -901,7 +903,7 @@ class methods
         int|string $chat_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -916,7 +918,7 @@ class methods
         int|string $chat_id, string $title
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -931,7 +933,7 @@ class methods
         int|string $chat_id, string $description = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -947,7 +949,7 @@ class methods
         int|string $chat_id, int $message_id, bool $disable_notification = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -962,7 +964,7 @@ class methods
         int|string $chat_id, int $message_id = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -976,7 +978,7 @@ class methods
         int|string $chat_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -990,7 +992,7 @@ class methods
         int|string $chat_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1004,7 +1006,7 @@ class methods
         int|string $chat_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1018,7 +1020,7 @@ class methods
         int|string $chat_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1032,7 +1034,7 @@ class methods
         int|string $chat_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1047,7 +1049,7 @@ class methods
         int|string $chat_id, int $user_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1062,7 +1064,7 @@ class methods
         int|string $chat_id, string $sticker_set_name
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1076,7 +1078,7 @@ class methods
         int|string $chat_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1093,7 +1095,7 @@ class methods
         int|string $chat_id, string $name, int $icon_color = null, string $icon_custom_emoji_id = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1110,7 +1112,7 @@ class methods
         int|string $chat_id, int $message_thread_id, string $name = null, string $icon_custom_emoji_id = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1125,7 +1127,7 @@ class methods
         int|string $chat_id, int $message_thread_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1140,7 +1142,7 @@ class methods
         int|string $chat_id, int $message_thread_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1155,7 +1157,7 @@ class methods
         int|string $chat_id, int $message_thread_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1170,7 +1172,7 @@ class methods
         int|string $chat_id, int $message_thread_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1185,7 +1187,7 @@ class methods
         int|string $chat_id, string $name
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1199,7 +1201,7 @@ class methods
         int|string $chat_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1213,7 +1215,7 @@ class methods
         int|string $chat_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1227,7 +1229,7 @@ class methods
         int|string $chat_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1241,7 +1243,7 @@ class methods
         int|string $chat_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1255,7 +1257,7 @@ class methods
         int|string $chat_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1273,7 +1275,7 @@ class methods
         string $callback_query_id, string $text = null, bool $show_alert = null, string $url = null, int $cache_time = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1289,7 +1291,7 @@ class methods
         Json|string $commands, Json|string $scope = null, string $language_code = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1304,7 +1306,7 @@ class methods
         Json|string $scope = null, string $language_code = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1319,7 +1321,7 @@ class methods
         Json|string $scope = null, string $language_code = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1334,7 +1336,7 @@ class methods
         string $name = null, string $language_code = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1348,7 +1350,7 @@ class methods
         string $language_code = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1363,7 +1365,7 @@ class methods
         string $description = null, string $language_code = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1377,7 +1379,7 @@ class methods
         string $language_code = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1392,7 +1394,7 @@ class methods
         string $short_description = null, string $language_code = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1406,7 +1408,7 @@ class methods
         string $language_code = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1421,7 +1423,7 @@ class methods
         int $chat_id = null, Json|string $menu_button = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1435,7 +1437,7 @@ class methods
         int $chat_id = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1450,7 +1452,7 @@ class methods
         Json|string $rights = null, bool $for_channels = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1464,7 +1466,7 @@ class methods
         bool $for_channels = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     // https://core.telegram.org/bots/api#updating-messages
@@ -1487,7 +1489,7 @@ class methods
         int|string $chat_id = null, int $message_id = null, string $inline_message_id = null, string $text, string $parse_mode = null, Json|string $entities = null, bool $disable_web_page_preview = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1507,7 +1509,7 @@ class methods
         int|string $chat_id = null, int $message_id = null, string $inline_message_id = null, string $caption = null, string $parse_mode = null, Json|string $caption_entities = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1525,7 +1527,7 @@ class methods
         int|string $chat_id = null, int $message_id = null, string $inline_message_id = null, Json|string $media, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1547,7 +1549,7 @@ class methods
         int|string $chat_id = null, int $message_id = null, string $inline_message_id = null, float $latitude, float $longitude, float $horizontal_accuracy = null, int $heading = null, int $proximity_alert_radius = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1564,7 +1566,7 @@ class methods
         int|string $chat_id = null, int $message_id = null, string $inline_message_id = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1581,7 +1583,7 @@ class methods
         int|string $chat_id = null, int $message_id = null, string $inline_message_id = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1597,7 +1599,7 @@ class methods
         int|string $chat_id, int $message_id, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1621,7 +1623,7 @@ class methods
         int|string $chat_id, int $message_id
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     // https://core.telegram.org/bots/api#stickers
@@ -1645,7 +1647,7 @@ class methods
         int|string $chat_id, int $message_thread_id = null, mixed $sticker, string $emoji = null, bool $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1659,7 +1661,7 @@ class methods
         string $name
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1673,7 +1675,7 @@ class methods
         Json|string $custom_emoji_ids
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1689,7 +1691,7 @@ class methods
         int $user_id, mixed $sticker, string $sticker_format
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1709,7 +1711,7 @@ class methods
         int $user_id, string $name, string $title, Json|string $stickers, string $sticker_format, string $sticker_type = null, bool $needs_repainting = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1725,7 +1727,7 @@ class methods
         int $user_id, string $name, Json|string $sticker
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1740,7 +1742,7 @@ class methods
         string $sticker, int $position
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1754,7 +1756,7 @@ class methods
         string $sticker
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1769,7 +1771,7 @@ class methods
         string $sticker, Json|string $emoji_list
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1784,7 +1786,7 @@ class methods
         string $sticker, Json|string $keywords = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1799,7 +1801,7 @@ class methods
         string $sticker, Json|string $mask_position = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1814,7 +1816,7 @@ class methods
         string $name, string $title
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1830,7 +1832,7 @@ class methods
         string $name, int $user_id, mixed $thumbnail = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1845,7 +1847,7 @@ class methods
         string $name, string $custom_emoji_id = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1859,7 +1861,7 @@ class methods
         string $name
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     // https://core.telegram.org/bots/api#inline-mode
@@ -1880,7 +1882,7 @@ class methods
         int $inline_query_id, Json|string $results, int $cache_time = null, bool $is_personal = null, string $next_offset = null, Json|string $button
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1894,7 +1896,7 @@ class methods
         string $web_app_query_id, Json|string $result
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     // https://core.telegram.org/bots/api#payments
@@ -1937,7 +1939,7 @@ class methods
         int|string $chat_id, int $message_thread_id = null, string $title, string $description, string $payload, string $provider_token, string $currency, Json|string $prices, int $max_tip_amount = null, Json|string $suggested_tip_amounts = null, string $start_parameter = null, string $provider_data = null, string $photo_url = null, int $photo_size = null, int $photo_width = null, int $photo_height = null, bool $need_name = null, bool $need_phone_number = null, bool $need_email = null, bool $need_shipping_address = null, bool $send_phone_number_to_provider = null, bool $send_email_to_provider = null, bool $is_flexible = null, bool $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1970,7 +1972,7 @@ class methods
         string $title, string $description, string $payload, string $provider_token, string $currency, Json|string $prices, int $max_tip_amount = null, Json|string $suggested_tip_amounts = null, string $provider_data = null, string $photo_url = null, int $photo_size = null, int $photo_width = null, int $photo_height = null, bool $need_name = null, bool $need_phone_number = null, bool $need_email = null, bool $need_shipping_address = null, bool $send_phone_number_to_provider = null, bool $send_email_to_provider = null, bool $is_flexible = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -1987,7 +1989,7 @@ class methods
         string $shipping_query_id, bool $ok, Json|string $shipping_options = null, string $error_message = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -2003,7 +2005,7 @@ class methods
         string $pre_checkout_query_id, bool $ok, string $error_message = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     // https://core.telegram.org/bots/api#telegram-passport
@@ -2025,7 +2027,7 @@ class methods
         int $user_id, Json|string $errors
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     // https://core.telegram.org/bots/api#games
@@ -2048,7 +2050,7 @@ class methods
         int $chat_id, int $message_thread_id = null, string $game_short_name, bool $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -2068,7 +2070,7 @@ class methods
         int $user_id, int $score, bool $force = null, bool $disable_edit_message = null, int $chat_id = null, int $message_id = null, string $inline_message_id = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
@@ -2085,17 +2087,17 @@ class methods
         int $user_id, int $chat_id = null, int $message_id = null, string $inline_message_id = null
     ): mixed
     {
-        return $this->getResponse(__FUNCTION__);
+        return $this->getResponse(__FUNCTION__, get_defined_vars());
     }
 
     /**
      * @param $function
      * @return mixed
      */
-    private function getResponse($function): mixed
+    private function getResponse($function, $params): mixed
     {
-        $promise = $this->guzzle->requestAsync($this->method, '/' . $function, [
-            'body' => compact(self::get_func_argNames($function))
+        $promise = $this->guzzle->requestAsync($this->method, '/bot' . $this->bot_token . '/' . $function, [
+            'form_params' => $params
         ]);
         return $promise->then(
             function (ResponseInterface $res) {

@@ -8,7 +8,7 @@ use stdClass;
 
 class updates
 {
-    public Json|string $updates;
+    public object $updates;
     public int $output;
     public int $update_id;
     public const OUTPUT_JSON = 111;
@@ -17,8 +17,9 @@ class updates
 
     public function __construct(Json|string $updates, int $output = self::OUTPUT_OBJECT)
     {
-        $this->updates = Json::decode($updates);
+        $this->updates = json_decode($updates);
         $this->update_id = $this->updates->update_id;
+        $this->output=$output;
     }
 
     /**
