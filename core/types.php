@@ -165,7 +165,7 @@ class types
                 $update = json_decode($update, true);
             break;
         endswitch;
-        $this->update = $update;
+        $this->update = (isset($update['ok']) && isset($update['result'])) ? $update['result'] : $update;
     }
 
     public function Animation(): Animation
