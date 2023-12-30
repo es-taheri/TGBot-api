@@ -14,7 +14,7 @@ class inlinekeyboard
     public const OUTPUT_JSON = 111;
     public const OUTPUT_OBJECT = 112;
     public const OUTPUT_ARRAY = 113;
-    private const DEFAULT_KEYBOARD = [
+    public const DEFAULT_KEYBOARD = [
         'inline_keyboard' => []
     ];
 
@@ -45,18 +45,26 @@ class inlinekeyboard
      * @return array
      */
     public function KeyboardButton_add(
-        string      $text, int $row = null, int $column = null, string $url = null, string $callback_data = null,
+        string      $text, int $row = null, int $column = null, string $callback_data = null, string $url = null,
         Json|string $web_app = null, Json|string $login_url = null, string $switch_inline_query = null,
         string      $switch_inline_query_current_chat = null, Json|string $switch_inline_query_chosen_chat = null,
         Json|string $callback_game = null, bool $pay = null
     ): array
     {
-        $row = (is_null($row)) ? count($this->buttons) - 1 : $row - 1;
-        $column = (is_null($column)) ? count($this->buttons[$row]) : $column - 1;
-        if ($column > 4):
+        if (is_null($row) && count($this->buttons) == 0)
+            $row = 1;
+        else
+            $row = (is_null($row)) ? count($this->buttons) : $row;
+        if (!empty($this->buttons[$row]))
+            $column = (is_null($column)) ? count($this->buttons[$row]) : $column;
+        else
+            $column = 1;
+        if ($column > 5):
             $row++;
-            $column = 0;
+            $column = 1;
         endif;
+        $row--;
+        $column--;
         $this->buttons[$row][$column] = [
             'text' => $text,
             'url' => $url,
@@ -90,9 +98,10 @@ class inlinekeyboard
      * @return bool
      */
     public function KeyboardButton_edit(
-        int         $row = null, int $column = null, string $url = null, string $callback_data = null, Json|string $web_app = null,
-        Json|string $login_url = null, string $switch_inline_query = null, string $switch_inline_query_current_chat = null,
-        Json|string $switch_inline_query_chosen_chat = null, Json|string $callback_game = null, bool $pay = null
+        int         $row = null, int $column = null, string $text = null, string $callback_data = null, string $url = null,
+        Json|string $web_app = null, Json|string $login_url = null, string $switch_inline_query = null,
+        string      $switch_inline_query_current_chat = null, Json|string $switch_inline_query_chosen_chat = null,
+        Json|string $callback_game = null, bool $pay = null
     ): bool
     {
         if (!empty($this->buttons[$row - 1][$column - 1])) {
@@ -122,21 +131,21 @@ class inlinekeyboard
      * @param int|null $column
      * @return array|false
      */
-    public function KeyboardButton_get(int $row, int $column=null): array|false
+    public function KeyboardButton_get(int $row, int $column = null): array|false
     {
-        if (is_null($row) && is_null($column)){
+        if (is_null($row) && is_null($column)) {
             if (!empty($this->buttons)):
                 return $this->buttons;
             else:
                 return false;
             endif;
-        }elseif (is_null($column)) {
+        } elseif (is_null($column)) {
             if (!empty($this->buttons[$row - 1])):
                 return $this->buttons[$row - 1];
             else:
                 return false;
             endif;
-        }else{
+        } else {
             if (!empty($this->buttons[$row - 1][$column - 1]))
                 return $this->buttons[$row - 1][$column - 1];
             else
@@ -153,16 +162,16 @@ class inlinekeyboard
      * @param int|null $column
      * @return bool
      */
-    public function KeyboardButton_remove(int $row=null, int $column = null): bool
+    public function KeyboardButton_remove(int $row = null, int $column = null): bool
     {
-        if (is_null($row) && is_null($column)){
+        if (is_null($row) && is_null($column)) {
             if (!empty($this->buttons)):
-                $this->buttons=[];
+                $this->buttons = [];
                 return true;
             else:
                 return false;
             endif;
-        }elseif (is_null($column)) {
+        } elseif (is_null($column)) {
             if (!empty($this->buttons[$row - 1])):
                 unset($this->buttons[$row - 1]);
                 $this->buttons = array_values($this->buttons);
@@ -187,10 +196,10 @@ class inlinekeyboard
      *
      * @return array
      */
-    public function InlineKeyboardMarkup(): array
+    public function InlineKeyboardMarkup(): array|object|string
     {
         $this->keyboard['inline_keyboard'] = $this->buttons;
-        return $this->keyboard;
+        return self::output($this->keyboard);
     }
 
     private function output($data)

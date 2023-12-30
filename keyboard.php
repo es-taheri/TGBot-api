@@ -51,17 +51,20 @@ class keyboard
         bool   $request_contact = null, bool $request_location = null, Json|string $request_poll = null, Json|string $web_app = null
     ): array
     {
-        $row = (is_null($row)) ? count($this->buttons) : $row;
+        if (is_null($row) && count($this->buttons) == 0)
+            $row = 1;
+        else
+            $row = (is_null($row)) ? count($this->buttons) : $row;
         if (!empty($this->buttons[$row]))
             $column = (is_null($column)) ? count($this->buttons[$row]) : $column;
         else
             $column = 1;
+        if ($column > 5):
+            $row++;
+            $column = 1;
+        endif;
         $row--;
         $column--;
-        if ($column > 4):
-            $row++;
-            $column = 0;
-        endif;
         $this->buttons[$row][$column] = [
             'text' => $text,
             'request_user' => $request_user,
@@ -282,7 +285,7 @@ class keyboard
         bool   $one_time_keyboard = null,
         string $input_field_placeholder = null,
         bool   $selective = null
-    ): array
+    ): array|object|string
     {
         $this->keyboard['keyboard'] = $this->buttons;
         $keyboard = $this->keyboard;
@@ -291,7 +294,7 @@ class keyboard
         $keyboard['one_time_keyboard'] = $one_time_keyboard ?? $keyboard['one_time_keyboard'];
         $keyboard['input_field_placeholder'] = $input_field_placeholder ?? $keyboard['input_field_placeholder'];
         $keyboard['selective'] = $selective ?? $keyboard['selective'];
-        return $keyboard;
+        return $this->output($keyboard);
     }
 
     /**
