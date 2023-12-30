@@ -156,9 +156,9 @@ class methods
      * @link https://core.telegram.org/bots/api#sendmessage
      */
     public function sendMessage(
-        string $chat_id, int $message_thread_id = null, string $text, string $parse_mode = null, Json|string $entities = null,
-        bool   $disable_web_page_preview = null, bool $disable_notification = null, bool $protect_content = null,
-        int    $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
+        string $chat_id, string $text, Json|string $reply_markup = null, int $message_thread_id = null, string $parse_mode = null,
+        int    $reply_to_message_id = null, Json|string $entities = null, bool $disable_web_page_preview = null,
+        bool   $disable_notification = null, bool $protect_content = null, bool $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -178,8 +178,8 @@ class methods
      * @link https://core.telegram.org/bots/api#forwardmessage
      */
     public function forwardMessage(
-        int|string $chat_id, int $message_thread_id = null, int|string $from_chat_id, bool $disable_notification = null,
-        bool       $protect_content = null, int $message_id
+        int|string $chat_id, int|string $from_chat_id, int $message_id, bool $disable_notification = null,
+        int        $message_thread_id = null, bool $protect_content = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -207,9 +207,9 @@ class methods
      * @link https://core.telegram.org/bots/api#sendaudio
      */
     public function copyMessage(
-        int|string $chat_id, int $message_thread_id = null, int|string $from_chat_id, int $message_id, string $caption = null,
-        string     $parse_mode = null, Json|string $caption_entities = null, bool $disable_notification = null, bool $protect_content = null,
-        int        $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
+        int|string $chat_id, int|string $from_chat_id, int $message_id, Json|string $reply_markup = null, string $caption = null,
+        string     $parse_mode = null, int $reply_to_message_id = null, int $message_thread_id = null, Json|string $caption_entities = null,
+        bool       $disable_notification = null, bool $protect_content = null, bool $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -234,9 +234,9 @@ class methods
      * @link https://core.telegram.org/bots/api#sendphoto
      */
     public function sendPhoto(
-        int|string  $chat_id, int $message_thread_id = null, mixed $photo, string $caption = null, string $parse_mode = null,
-        Json|string $caption_entities = null, bool $has_spoiler = null, bool $disable_notification = null, bool $protect_content = null,
-        int         $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
+        int|string $chat_id, mixed $photo, string $caption = null, Json|string $reply_markup = null, string $parse_mode = null,
+        int        $reply_to_message_id = null, int $message_thread_id = null, Json|string $caption_entities = null,
+        bool       $has_spoiler = null, bool $disable_notification = null, bool $protect_content = null, bool $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -267,10 +267,10 @@ class methods
      * @link https://core.telegram.org/bots/api#sendaudio
      */
     public function sendAudio(
-        int|string  $chat_id, int $message_thread_id = null, mixed $audio, string $caption = null, string $parse_mode = null,
-        Json|string $caption_entities = null, int $duration = null, string $performer = null, string $title = null,
-        mixed       $thumbnail = null, bool $disable_notification = null, bool $protect_content = null,
-        int         $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
+        int|string $chat_id, mixed $audio, string $caption = null, Json|string $reply_markup = null, string $parse_mode = null,
+        int        $message_thread_id = null, Json|string $caption_entities = null, int $duration = null, string $performer = null,
+        string     $title = null, mixed $thumbnail = null, bool $disable_notification = null, bool $protect_content = null,
+        int        $reply_to_message_id = null, bool $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -297,10 +297,10 @@ class methods
      * @link https://core.telegram.org/bots/api#senddocument
      */
     public function sendDocument(
-        int|string $chat_id, int $message_thread_id = null, mixed $document, mixed $thumbnail = null, string $caption = null,
-        string     $parse_mode = null, Json|string $caption_entities = null, bool $disable_content_type_detection = null,
-        bool       $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null,
-        bool       $allow_sending_without_reply = null, Json|string $reply_markup = null
+        int|string $chat_id, mixed $document, mixed $thumbnail = null, Json|string $reply_markup = null, string $caption = null,
+        string     $parse_mode = null, int $reply_to_message_id = null, int $message_thread_id = null, Json|string $caption_entities = null,
+        bool       $disable_content_type_detection = null, bool $disable_notification = null, bool $protect_content = null,
+        bool       $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -331,11 +331,10 @@ class methods
      * @link https://core.telegram.org/bots/api#sendvideo
      */
     public function sendVideo(
-        int|string  $chat_id, int $message_thread_id = null, mixed $video, int $duration = null, int $width = null,
-        int         $height = null, mixed $thumbnail = null, string $caption = null, string $parse_mode = null,
-        Json|string $caption_entities = null, bool $has_spoiler = null, bool $supports_streaming = null,
-        bool        $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null,
-        bool        $allow_sending_without_reply = null, Json|string $reply_markup = null
+        int|string $chat_id, mixed $video, string $caption = null, Json|string $reply_markup = null, string $parse_mode = null,
+        int        $duration = null, int $width = null, int $reply_to_message_id = null, int $message_thread_id = null,
+        int        $height = null, mixed $thumbnail = null, Json|string $caption_entities = null, bool $has_spoiler = null,
+        bool       $supports_streaming = null, bool $disable_notification = null, bool $protect_content = null, bool $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -366,11 +365,10 @@ class methods
      * @link https://core.telegram.org/bots/api#sendanimation
      */
     public function sendAnimation(
-        int|string  $chat_id, int $message_thread_id = null, mixed $animation, int $duration = null, int $width = null,
-        int         $height = null, mixed $thumbnail = null, string $caption = null, string $parse_mode = null,
-        Json|string $caption_entities = null, bool $has_spoiler = null, bool $disable_notification = null,
-        bool        $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null,
-        Json|string $reply_markup = null
+        int|string  $chat_id, mixed $animation, string $caption = null, Json|string $reply_markup = null, string $parse_mode = null,
+        int         $duration = null, int $width = null, int $height = null, int $message_thread_id = null, mixed $thumbnail = null,
+        Json|string $caption_entities = null, bool $has_spoiler = null, bool $disable_notification = null, bool $protect_content = null,
+        int         $reply_to_message_id = null, bool $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -399,10 +397,10 @@ class methods
      * @link https://core.telegram.org/bots/api#sendvoice
      */
     public function sendVoice(
-        int|string  $chat_id, int $message_thread_id = null, mixed $voice, string $caption = null, string $parse_mode = null,
-        Json|string $caption_entities = null, int $duration = null, bool $disable_content_type_detection = null,
-        bool        $has_spoiler = null, bool $disable_notification = null, bool $protect_content = null,
-        int         $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
+        int|string $chat_id, mixed $voice, string $caption = null, Json|string $reply_markup = null, string $parse_mode = null,
+        int        $reply_to_message_id = null, int $message_thread_id = null, Json|string $caption_entities = null,
+        int        $duration = null, bool $disable_content_type_detection = null, bool $has_spoiler = null, bool $disable_notification = null,
+        bool       $protect_content = null, bool $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -428,9 +426,9 @@ class methods
      * @link https://core.telegram.org/bots/api#sendvideonote
      */
     public function sendVideoNote(
-        int|string $chat_id, int $message_thread_id = null, mixed $voice, int $duration = null, int $length = null,
-        mixed      $thumbnail = null, bool $disable_notification = null, bool $protect_content = null,
-        int        $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
+        int|string $chat_id, mixed $voice, Json|string $reply_markup = null, int $reply_to_message_id = null, int $duration = null,
+        int        $length = null, mixed $thumbnail = null, int $message_thread_id = null, bool $disable_notification = null,
+        bool       $protect_content = null, bool $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -453,9 +451,9 @@ class methods
      * @link https://core.telegram.org/bots/api#sendmediagroup
      */
     public function sendMediaGroup(
-        int|string  $chat_id, int $message_thread_id = null, Json|string $media, bool $disable_notification = null,
-        bool        $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null,
-        Json|string $reply_markup = null
+        int|string $chat_id, Json|string $media, Json|string $reply_markup = null, int $reply_to_message_id = null,
+        bool       $disable_notification = null, int $message_thread_id = null, bool $protect_content = null,
+        bool       $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -481,7 +479,9 @@ class methods
      * @link https://core.telegram.org/bots/api#sendLocation
      */
     public function sendLocation(
-        int|string $chat_id, int $message_thread_id = null, float $latitude, float $longitude, float $horizontal_accuracy = null, int $live_period = null, int $heading = null, int $proximity_alert_radius = null, bool $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
+        int|string $chat_id, float $latitude, float $longitude, float $horizontal_accuracy = null, int $live_period = null,
+        int        $heading = null, int $proximity_alert_radius = null, Json|string $reply_markup = null, int $message_thread_id = null,
+        bool       $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -509,7 +509,10 @@ class methods
      * @link https://core.telegram.org/bots/api#sendVenue
      */
     public function sendVenue(
-        int|string $chat_id, int $message_thread_id = null, float $latitude, float $longitude, string $title, string $address, string $foursquare_id = null, string $foursquare_type = null, string $google_place_id = null, string $google_place_type = null, bool $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
+        int|string $chat_id, float $latitude, float $longitude, string $title, string $address, string $foursquare_id = null,
+        string     $foursquare_type = null, string $google_place_id = null, string $google_place_type = null, Json|string $reply_markup = null,
+        int        $message_thread_id = null, bool $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null,
+        bool       $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -533,7 +536,9 @@ class methods
      * @link https://core.telegram.org/bots/api#sendContact
      */
     public function sendContact(
-        int|string $chat_id, int $message_thread_id = null, string $phone_number, string $first_name, string $last_name = null, string $vcard = null, bool $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
+        int|string  $chat_id, string $phone_number, string $first_name, string $last_name = null, string $vcard = null,
+        Json|string $reply_markup = null, int $reply_to_message_id = null, int $message_thread_id = null, bool $disable_notification = null,
+        bool        $protect_content = null, bool $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -565,7 +570,11 @@ class methods
      * @link https://core.telegram.org/bots/api#sendPoll
      */
     public function sendPoll(
-        int|string $chat_id, int $message_thread_id = null, string $question, Json|string $options, bool $is_anonymous = null, string $type = null, bool $allows_multiple_answers = null, int $correct_option_id = null, string $explanation = null, string $explanation_parse_mode = null, Json|string $explanation_entities = null, int $open_period = null, int $close_date = null, bool $is_closed = null, bool $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
+        int|string $chat_id, string $question, Json|string $options, bool $is_anonymous = null, string $type = null,
+        bool       $allows_multiple_answers = null, int $correct_option_id = null, string $explanation = null,
+        string     $explanation_parse_mode = null, Json|string $explanation_entities = null, int $open_period = null,
+        int        $close_date = null, bool $is_closed = null, Json|string $reply_markup = null, int $message_thread_id = null,
+        bool       $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -586,7 +595,9 @@ class methods
      * @link https://core.telegram.org/bots/api#sendDice
      */
     public function sendDice(
-        int|string $chat_id, int $message_thread_id = null, string $emoji = null, bool $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
+        int|string $chat_id, string $emoji = null, Json|string $reply_markup = null, int $reply_to_message_id = null,
+        int        $message_thread_id = null, bool $disable_notification = null, bool $protect_content = null,
+        bool       $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -602,7 +613,7 @@ class methods
      * @link https://core.telegram.org/bots/api#sendChatAction
      */
     public function sendChatAction(
-        int|string $chat_id, int $message_thread_id = null, string $action
+        int|string $chat_id, string $action, int $message_thread_id = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -1109,7 +1120,7 @@ class methods
      * @link https://core.telegram.org/bots/api#editForumTopic
      */
     public function editForumTopic(
-        int|string $chat_id, int $message_thread_id, string $name = null, string $icon_custom_emoji_id = null
+        int|string $chat_id, string $name = null, string $icon_custom_emoji_id = null, int $message_thread_id
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -1486,7 +1497,8 @@ class methods
      * @link https://core.telegram.org/bots/api#editMessageText
      */
     public function editMessageText(
-        int|string $chat_id = null, int $message_id = null, string $inline_message_id = null, string $text, string $parse_mode = null, Json|string $entities = null, bool $disable_web_page_preview = null, Json|string $reply_markup = null
+        int|string  $chat_id = null, int $message_id = null, string $inline_message_id = null, string $text,
+        Json|string $reply_markup = null, string $parse_mode = null, Json|string $entities = null, bool $disable_web_page_preview = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -1506,7 +1518,8 @@ class methods
      * @link https://core.telegram.org/bots/api#editMessageCaption
      */
     public function editMessageCaption(
-        int|string $chat_id = null, int $message_id = null, string $inline_message_id = null, string $caption = null, string $parse_mode = null, Json|string $caption_entities = null, Json|string $reply_markup = null
+        int|string  $chat_id = null, int $message_id = null, string $inline_message_id = null, string $caption = null,
+        Json|string $reply_markup = null, string $parse_mode = null, Json|string $caption_entities = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -1644,7 +1657,8 @@ class methods
      * @link https://core.telegram.org/bots/api#sendSticker
      */
     public function sendSticker(
-        int|string $chat_id, int $message_thread_id = null, mixed $sticker, string $emoji = null, bool $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
+        int|string $chat_id, mixed $sticker, string $emoji = null, Json|string $reply_markup = null, int $reply_to_message_id = null,
+        int        $message_thread_id = null, bool $disable_notification = null, bool $protect_content = null, bool $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -1936,7 +1950,13 @@ class methods
      * @link https://core.telegram.org/bots/api#sendInvoicelink
      */
     public function sendInvoice(
-        int|string $chat_id, int $message_thread_id = null, string $title, string $description, string $payload, string $provider_token, string $currency, Json|string $prices, int $max_tip_amount = null, Json|string $suggested_tip_amounts = null, string $start_parameter = null, string $provider_data = null, string $photo_url = null, int $photo_size = null, int $photo_width = null, int $photo_height = null, bool $need_name = null, bool $need_phone_number = null, bool $need_email = null, bool $need_shipping_address = null, bool $send_phone_number_to_provider = null, bool $send_email_to_provider = null, bool $is_flexible = null, bool $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
+        int|string  $chat_id, string $title, string $description, string $payload, string $provider_token, string $currency,
+        Json|string $prices, int $max_tip_amount = null, Json|string $suggested_tip_amounts = null, string $start_parameter = null,
+        string      $provider_data = null, string $photo_url = null, int $photo_size = null, int $photo_width = null, int $photo_height = null,
+        bool        $need_name = null, bool $need_phone_number = null, bool $need_email = null, bool $need_shipping_address = null,
+        bool        $send_phone_number_to_provider = null, bool $send_email_to_provider = null, bool $is_flexible = null, Json|string $reply_markup = null,
+        int         $reply_to_message_id = null, int $message_thread_id = null, bool $disable_notification = null, bool $protect_content = null,
+        bool        $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -2047,7 +2067,8 @@ class methods
      * @link https://core.telegram.org/bots/api#sendGamelink
      */
     public function sendGame(
-        int $chat_id, int $message_thread_id = null, string $game_short_name, bool $disable_notification = null, bool $protect_content = null, int $reply_to_message_id = null, bool $allow_sending_without_reply = null, Json|string $reply_markup = null
+        int $chat_id, string $game_short_name, Json|string $reply_markup = null, int $reply_to_message_id = null,
+        int $message_thread_id = null, bool $disable_notification = null, bool $protect_content = null, bool $allow_sending_without_reply = null
     ): mixed
     {
         return $this->getResponse(__FUNCTION__, get_defined_vars());
@@ -2102,13 +2123,13 @@ class methods
         return $promise->then(
             function (ResponseInterface $res) {
                 $body = $res->getBody();
-                return [
+                return $this->output([
                     'success' => true,
                     'code' => $res->getStatusCode(),
                     'header' => $res->getHeaders(),
                     'response' => $body->getContents(),
                     'size' => $body->getSize(),
-                ];
+                ]);
             },
             function (RequestException $err) {
                 $response = [
@@ -2120,7 +2141,7 @@ class methods
                     $response['response'] = $err->getResponse()->getBody()->getContents();
                 else
                     $response['response'] = null;
-                return $response;
+                return $this->output($response);
             }
         )->wait();
     }
