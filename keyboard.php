@@ -121,7 +121,7 @@ class keyboard
      * @param int|null $column
      * @return array|false
      */
-    public function KeyboardButton_get(int $row, int $column = null): array|false
+    public function KeyboardButton_get(int $row=null, int $column = null): array|false
     {
         if (is_null($row) && is_null($column)) {
             if (!empty($this->buttons)):

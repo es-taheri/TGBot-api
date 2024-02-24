@@ -44,7 +44,7 @@ class inlinekeyboard
      * @param bool|null $pay
      * @return array
      */
-    public function KeyboardButton_add(
+    public function InlineKeyboardButton_add(
         string      $text, int $row = null, int $column = null, string $callback_data = null, string $url = null,
         Json|string $web_app = null, Json|string $login_url = null, string $switch_inline_query = null,
         string      $switch_inline_query_current_chat = null, Json|string $switch_inline_query_chosen_chat = null,
@@ -97,7 +97,7 @@ class inlinekeyboard
      * @param bool|null $pay
      * @return bool
      */
-    public function KeyboardButton_edit(
+    public function InlineKeyboardButton_edit(
         int         $row = null, int $column = null, string $text = null, string $callback_data = null, string $url = null,
         Json|string $web_app = null, Json|string $login_url = null, string $switch_inline_query = null,
         string      $switch_inline_query_current_chat = null, Json|string $switch_inline_query_chosen_chat = null,
@@ -131,7 +131,7 @@ class inlinekeyboard
      * @param int|null $column
      * @return array|false
      */
-    public function KeyboardButton_get(int $row, int $column = null): array|false
+    public function InlineKeyboardButton_get(int $row=null, int $column = null): array|false
     {
         if (is_null($row) && is_null($column)) {
             if (!empty($this->buttons)):
@@ -162,7 +162,7 @@ class inlinekeyboard
      * @param int|null $column
      * @return bool
      */
-    public function KeyboardButton_remove(int $row = null, int $column = null): bool
+    public function InlineKeyboardButton_remove(int $row = null, int $column = null): bool
     {
         if (is_null($row) && is_null($column)) {
             if (!empty($this->buttons)):

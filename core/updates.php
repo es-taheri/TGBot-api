@@ -30,7 +30,7 @@ class updates
     public function message(): object|string|array
     {
         $data = $this->updates->{__FUNCTION__};
-        return self::output(get_object_vars($data));
+        return $this->output(get_object_vars($data));
     }
 
     /**
@@ -41,7 +41,7 @@ class updates
     public function edited_message(): object|string|array
     {
         $data = $this->updates->{__FUNCTION__};
-        return self::output(get_object_vars($data));
+        return $this->output(get_object_vars($data));
     }
 
     /**
@@ -52,7 +52,7 @@ class updates
     public function channel_post(): object|string|array
     {
         $data = $this->updates->{__FUNCTION__};
-        return self::output(get_object_vars($data));
+        return $this->output(get_object_vars($data));
     }
 
     /**
@@ -63,7 +63,7 @@ class updates
     public function edited_channel_post(): object|string|array
     {
         $data = $this->updates->{__FUNCTION__};
-        return self::output(get_object_vars($data));
+        return $this->output(get_object_vars($data));
     }
 
     /**
@@ -74,7 +74,7 @@ class updates
     public function inline_query(): object|string|array
     {
         $data = $this->updates->{__FUNCTION__};
-        return self::output(get_object_vars($data));
+        return $this->output(get_object_vars($data));
     }
 
     /**
@@ -86,7 +86,7 @@ class updates
     public function chosen_inline_result(): object|string|array
     {
         $data = $this->updates->{__FUNCTION__};
-        return self::output(get_object_vars($data));
+        return $this->output(get_object_vars($data));
     }
 
     /**
@@ -97,7 +97,7 @@ class updates
     public function callback_query(): object|string|array
     {
         $data = $this->updates->{__FUNCTION__};
-        return self::output(get_object_vars($data));
+        return $this->output(get_object_vars($data));
     }
 
     /**
@@ -108,7 +108,7 @@ class updates
     public function shipping_query(): object|string|array
     {
         $data = $this->updates->{__FUNCTION__};
-        return self::output(get_object_vars($data));
+        return $this->output(get_object_vars($data));
     }
 
     /**
@@ -119,7 +119,7 @@ class updates
     public function pre_checkout_query(): object|string|array
     {
         $data = $this->updates->{__FUNCTION__};
-        return self::output(get_object_vars($data));
+        return $this->output(get_object_vars($data));
     }
 
     /**
@@ -130,7 +130,7 @@ class updates
     public function poll(): object|string|array
     {
         $data = $this->updates->{__FUNCTION__};
-        return self::output(get_object_vars($data));
+        return $this->output(get_object_vars($data));
     }
 
     /**
@@ -141,7 +141,7 @@ class updates
     public function poll_answer(): object|string|array
     {
         $data = $this->updates->{__FUNCTION__};
-        return self::output(get_object_vars($data));
+        return $this->output(get_object_vars($data));
     }
 
     /**
@@ -153,7 +153,7 @@ class updates
     public function my_chat_member(): object|string|array
     {
         $data = $this->updates->{__FUNCTION__};
-        return self::output(get_object_vars($data));
+        return $this->output(get_object_vars($data));
     }
 
     /**
@@ -165,7 +165,7 @@ class updates
     public function chat_member(): object|string|array
     {
         $data = $this->updates->{__FUNCTION__};
-        return self::output(get_object_vars($data));
+        return $this->output(get_object_vars($data));
     }
 
     /**
@@ -177,7 +177,7 @@ class updates
     public function chat_join_request(): object|string|array
     {
         $data = $this->updates->{__FUNCTION__};
-        return self::output(get_object_vars($data));
+        return $this->output(get_object_vars($data));
     }
 
     private function output($data)
