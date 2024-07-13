@@ -12,10 +12,13 @@ use EasyTel\Handler\Request;
  * @method SendDice protect_content(bool $value) Protects the contents of the sent message from forwarding
  * @method SendDice message_effect_id(string $value) Unique identifier of the message effect to be added to the message; for private chats only
  * @method SendDice reply_parameters(string $value) Description of the message to reply to
- * @method SendDice reply_markup(string $value) Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user */
+ * @method SendDice reply_markup(string $value) Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
+ */
 class SendDice
 {
-    private Request $request;
+    private Request $_request;
+    private bool $_returned = false;
+    private bool $_sent = false;
     private int|string $chat_id;
     private string $business_connection_id;
     private int $message_thread_id;
@@ -25,9 +28,10 @@ class SendDice
     private string $message_effect_id;
     private string $reply_parameters;
     private string $reply_markup;
+    
     public function __construct(Request $request, int|string $chat_id)
     {
-        $this->request = $request;
+        $this->_request = $request;
         $this->chat_id = $chat_id;
     }
 
@@ -40,19 +44,26 @@ class SendDice
     {
         $parameters = [];
         foreach ($this as $key => $value):
-            if (isset($this->{$key}) && $key != 'request') $parameters[$key] = $value;
+            if (isset($this->{$key}) && !in_array($key, ['_request', '_sent', '_returned'])) $parameters[$key] = $value;
         endforeach;
         $r = new \ReflectionClass($this);
-        return $this->request->send(lcfirst($r->getShortName()), $parameters);
+        $this->_sent = true;
+        return $this->_request->send(lcfirst($r->getShortName()), $parameters);
     }
 
     private function return($function, $value)
     {
-        $class = new (static::class)($this->request, $this->chat_id);
+        $class = new (static::class)($this->_request, $this->chat_id);
             $this->{$function} = $value;
         foreach ($this as $key => $value):
-            $class->{$key} = $value;
+            if (!in_array($key, ['_sent', '_returned'])) $class->{$key} = $value;
         endforeach;
+        $this->_returned = true;
         return $class;
+    }
+
+    public function __destruct()
+    {
+        if (!$this->_returned && !$this->_sent) $this->_send();
     }
 }

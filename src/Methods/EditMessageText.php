@@ -11,10 +11,13 @@ use EasyTel\Handler\Request;
  * @method EditMessageText parse_mode(string $value) Mode for parsing entities in the message text. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
  * @method EditMessageText entities(string  $value) A JSON-serialized list of special entities that appear in message text, which can be specified instead of <em>parse_mode</em>
  * @method EditMessageText link_preview_options(string $value) Link preview generation options for the message
- * @method EditMessageText reply_markup(string $value) A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. */
+ * @method EditMessageText reply_markup(string $value) A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>.
+ */
 class EditMessageText
 {
-    private Request $request;
+    private Request $_request;
+    private bool $_returned = false;
+    private bool $_sent = false;
     private string $text;
     private int|string $chat_id;
     private int $message_id;
@@ -23,9 +26,10 @@ class EditMessageText
     private string  $entities;
     private string $link_preview_options;
     private string $reply_markup;
+    
     public function __construct(Request $request, string $text)
     {
-        $this->request = $request;
+        $this->_request = $request;
         $this->text = $text;
     }
 
@@ -38,19 +42,26 @@ class EditMessageText
     {
         $parameters = [];
         foreach ($this as $key => $value):
-            if (isset($this->{$key}) && $key != 'request') $parameters[$key] = $value;
+            if (isset($this->{$key}) && !in_array($key, ['_request', '_sent', '_returned'])) $parameters[$key] = $value;
         endforeach;
         $r = new \ReflectionClass($this);
-        return $this->request->send(lcfirst($r->getShortName()), $parameters);
+        $this->_sent = true;
+        return $this->_request->send(lcfirst($r->getShortName()), $parameters);
     }
 
     private function return($function, $value)
     {
-        $class = new (static::class)($this->request, $this->text);
+        $class = new (static::class)($this->_request, $this->text);
             $this->{$function} = $value;
         foreach ($this as $key => $value):
-            $class->{$key} = $value;
+            if (!in_array($key, ['_sent', '_returned'])) $class->{$key} = $value;
         endforeach;
+        $this->_returned = true;
         return $class;
+    }
+
+    public function __destruct()
+    {
+        if (!$this->_returned && !$this->_sent) $this->_send();
     }
 }

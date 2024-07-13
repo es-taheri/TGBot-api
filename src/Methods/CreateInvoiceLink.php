@@ -19,10 +19,13 @@ use EasyTel\Handler\Request;
  * @method CreateInvoiceLink need_shipping_address(bool $value) Pass <em>True</em> if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
  * @method CreateInvoiceLink send_phone_number_to_provider(bool $value) Pass <em>True</em> if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
  * @method CreateInvoiceLink send_email_to_provider(bool $value) Pass <em>True</em> if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
- * @method CreateInvoiceLink is_flexible(bool $value) Pass <em>True</em> if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>. */
+ * @method CreateInvoiceLink is_flexible(bool $value) Pass <em>True</em> if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+ */
 class CreateInvoiceLink
 {
-    private Request $request;
+    private Request $_request;
+    private bool $_returned = false;
+    private bool $_sent = false;
     private string $title;
     private string $description;
     private string $payload;
@@ -43,9 +46,10 @@ class CreateInvoiceLink
     private bool $send_phone_number_to_provider;
     private bool $send_email_to_provider;
     private bool $is_flexible;
+    
     public function __construct(Request $request, string $title, string $description, string $payload, string $currency, string  $prices)
     {
-        $this->request = $request;
+        $this->_request = $request;
         $this->title = $title;
         $this->description = $description;
         $this->payload = $payload;
@@ -62,19 +66,26 @@ class CreateInvoiceLink
     {
         $parameters = [];
         foreach ($this as $key => $value):
-            if (isset($this->{$key}) && $key != 'request') $parameters[$key] = $value;
+            if (isset($this->{$key}) && !in_array($key, ['_request', '_sent', '_returned'])) $parameters[$key] = $value;
         endforeach;
         $r = new \ReflectionClass($this);
-        return $this->request->send(lcfirst($r->getShortName()), $parameters);
+        $this->_sent = true;
+        return $this->_request->send(lcfirst($r->getShortName()), $parameters);
     }
 
     private function return($function, $value)
     {
-        $class = new (static::class)($this->request, $this->title, $this->description, $this->payload, $this->currency, $this->prices);
+        $class = new (static::class)($this->_request, $this->title, $this->description, $this->payload, $this->currency, $this->prices);
             $this->{$function} = $value;
         foreach ($this as $key => $value):
-            $class->{$key} = $value;
+            if (!in_array($key, ['_sent', '_returned'])) $class->{$key} = $value;
         endforeach;
+        $this->_returned = true;
         return $class;
+    }
+
+    public function __destruct()
+    {
+        if (!$this->_returned && !$this->_sent) $this->_send();
     }
 }

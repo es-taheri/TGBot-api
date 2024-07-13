@@ -7,14 +7,17 @@ use EasyTel\Handler\Request;
 
 class ReplaceStickerInSet
 {
-    private Request $request;
+    private Request $_request;
+    private bool $_returned = false;
+    private bool $_sent = false;
     private int $user_id;
     private string $name;
     private string $old_sticker;
     private string $sticker;
+    
     public function __construct(Request $request, int $user_id, string $name, string $old_sticker, string $sticker)
     {
-        $this->request = $request;
+        $this->_request = $request;
         $this->user_id = $user_id;
         $this->name = $name;
         $this->old_sticker = $old_sticker;
@@ -30,19 +33,26 @@ class ReplaceStickerInSet
     {
         $parameters = [];
         foreach ($this as $key => $value):
-            if (isset($this->{$key}) && $key != 'request') $parameters[$key] = $value;
+            if (isset($this->{$key}) && !in_array($key, ['_request', '_sent', '_returned'])) $parameters[$key] = $value;
         endforeach;
         $r = new \ReflectionClass($this);
-        return $this->request->send(lcfirst($r->getShortName()), $parameters);
+        $this->_sent = true;
+        return $this->_request->send(lcfirst($r->getShortName()), $parameters);
     }
 
     private function return($function, $value)
     {
-        $class = new (static::class)($this->request, $this->user_id, $this->name, $this->old_sticker, $this->sticker);
+        $class = new (static::class)($this->_request, $this->user_id, $this->name, $this->old_sticker, $this->sticker);
             $this->{$function} = $value;
         foreach ($this as $key => $value):
-            $class->{$key} = $value;
+            if (!in_array($key, ['_sent', '_returned'])) $class->{$key} = $value;
         endforeach;
+        $this->_returned = true;
         return $class;
+    }
+
+    public function __destruct()
+    {
+        if (!$this->_returned && !$this->_sent) $this->_send();
     }
 }

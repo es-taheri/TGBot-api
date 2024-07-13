@@ -19,10 +19,13 @@ use EasyTel\Handler\Request;
  * @method PromoteChatMember can_post_messages(bool $value) Pass <em>True</em> if the administrator can post messages in the channel, or access channel statistics; for channels only
  * @method PromoteChatMember can_edit_messages(bool $value) Pass <em>True</em> if the administrator can edit messages of other users and can pin messages; for channels only
  * @method PromoteChatMember can_pin_messages(bool $value) Pass <em>True</em> if the administrator can pin messages; for supergroups only
- * @method PromoteChatMember can_manage_topics(bool $value) Pass <em>True</em> if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only */
+ * @method PromoteChatMember can_manage_topics(bool $value) Pass <em>True</em> if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only
+ */
 class PromoteChatMember
 {
-    private Request $request;
+    private Request $_request;
+    private bool $_returned = false;
+    private bool $_sent = false;
     private int|string $chat_id;
     private int $user_id;
     private bool $is_anonymous;
@@ -40,9 +43,10 @@ class PromoteChatMember
     private bool $can_edit_messages;
     private bool $can_pin_messages;
     private bool $can_manage_topics;
+    
     public function __construct(Request $request, int|string $chat_id, int $user_id)
     {
-        $this->request = $request;
+        $this->_request = $request;
         $this->chat_id = $chat_id;
         $this->user_id = $user_id;
     }
@@ -56,19 +60,26 @@ class PromoteChatMember
     {
         $parameters = [];
         foreach ($this as $key => $value):
-            if (isset($this->{$key}) && $key != 'request') $parameters[$key] = $value;
+            if (isset($this->{$key}) && !in_array($key, ['_request', '_sent', '_returned'])) $parameters[$key] = $value;
         endforeach;
         $r = new \ReflectionClass($this);
-        return $this->request->send(lcfirst($r->getShortName()), $parameters);
+        $this->_sent = true;
+        return $this->_request->send(lcfirst($r->getShortName()), $parameters);
     }
 
     private function return($function, $value)
     {
-        $class = new (static::class)($this->request, $this->chat_id, $this->user_id);
+        $class = new (static::class)($this->_request, $this->chat_id, $this->user_id);
             $this->{$function} = $value;
         foreach ($this as $key => $value):
-            $class->{$key} = $value;
+            if (!in_array($key, ['_sent', '_returned'])) $class->{$key} = $value;
         endforeach;
+        $this->_returned = true;
         return $class;
+    }
+
+    public function __destruct()
+    {
+        if (!$this->_returned && !$this->_sent) $this->_send();
     }
 }

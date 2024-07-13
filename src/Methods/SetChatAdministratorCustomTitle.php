@@ -7,13 +7,16 @@ use EasyTel\Handler\Request;
 
 class SetChatAdministratorCustomTitle
 {
-    private Request $request;
+    private Request $_request;
+    private bool $_returned = false;
+    private bool $_sent = false;
     private int|string $chat_id;
     private int $user_id;
     private string $custom_title;
+    
     public function __construct(Request $request, int|string $chat_id, int $user_id, string $custom_title)
     {
-        $this->request = $request;
+        $this->_request = $request;
         $this->chat_id = $chat_id;
         $this->user_id = $user_id;
         $this->custom_title = $custom_title;
@@ -28,19 +31,26 @@ class SetChatAdministratorCustomTitle
     {
         $parameters = [];
         foreach ($this as $key => $value):
-            if (isset($this->{$key}) && $key != 'request') $parameters[$key] = $value;
+            if (isset($this->{$key}) && !in_array($key, ['_request', '_sent', '_returned'])) $parameters[$key] = $value;
         endforeach;
         $r = new \ReflectionClass($this);
-        return $this->request->send(lcfirst($r->getShortName()), $parameters);
+        $this->_sent = true;
+        return $this->_request->send(lcfirst($r->getShortName()), $parameters);
     }
 
     private function return($function, $value)
     {
-        $class = new (static::class)($this->request, $this->chat_id, $this->user_id, $this->custom_title);
+        $class = new (static::class)($this->_request, $this->chat_id, $this->user_id, $this->custom_title);
             $this->{$function} = $value;
         foreach ($this as $key => $value):
-            $class->{$key} = $value;
+            if (!in_array($key, ['_sent', '_returned'])) $class->{$key} = $value;
         endforeach;
+        $this->_returned = true;
         return $class;
+    }
+
+    public function __destruct()
+    {
+        if (!$this->_returned && !$this->_sent) $this->_send();
     }
 }

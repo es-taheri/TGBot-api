@@ -10,14 +10,11 @@ class InlineKeyboard
     public array $keyboard;
     public array $buttons;
     public int $format;
-    public const OUTPUT_JSON = 111;
-    public const OUTPUT_OBJECT = 112;
-    public const OUTPUT_ARRAY = 113;
     public const DEFAULT_KEYBOARD = [
         'inline_keyboard' => []
     ];
 
-    public function __construct(array $keyboard = self::DEFAULT_KEYBOARD, array $buttons = [], int $format = self::OUTPUT_JSON
+    public function __construct(array $keyboard = self::DEFAULT_KEYBOARD, array $buttons = [], int $format = Telegram::OUTPUT_JSON
     )
     {
         $this->keyboard = $keyboard;
@@ -226,8 +223,8 @@ class InlineKeyboard
     private function output($data)
     {
         return match ($this->format) {
-            self::OUTPUT_JSON => json::_out($data, true),
-            self::OUTPUT_OBJECT => json::_in(json::_out($data)),
+            Telegram::OUTPUT_JSON => json::_out($data, true),
+            Telegram::OUTPUT_OBJECT => json::_in(json::_out($data)),
             default => $data,
         };
     }

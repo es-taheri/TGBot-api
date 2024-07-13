@@ -12,10 +12,13 @@ use EasyTel\Handler\Request;
  * @method EditMessageCaption parse_mode(string $value) Mode for parsing entities in the message caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
  * @method EditMessageCaption caption_entities(string  $value) A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
  * @method EditMessageCaption show_caption_above_media(bool $value) Pass <em>True</em>, if the caption must be shown above the message media. Supported only for animation, photo and video messages.
- * @method EditMessageCaption reply_markup(string $value) A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. */
+ * @method EditMessageCaption reply_markup(string $value) A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>.
+ */
 class EditMessageCaption
 {
-    private Request $request;
+    private Request $_request;
+    private bool $_returned = false;
+    private bool $_sent = false;
     private int|string $chat_id;
     private int $message_id;
     private string $inline_message_id;
@@ -24,9 +27,10 @@ class EditMessageCaption
     private string  $caption_entities;
     private bool $show_caption_above_media;
     private string $reply_markup;
+    
     public function __construct(Request $request)
     {
-        $this->request = $request;
+        $this->_request = $request;
         
     }
 
@@ -39,19 +43,26 @@ class EditMessageCaption
     {
         $parameters = [];
         foreach ($this as $key => $value):
-            if (isset($this->{$key}) && $key != 'request') $parameters[$key] = $value;
+            if (isset($this->{$key}) && !in_array($key, ['_request', '_sent', '_returned'])) $parameters[$key] = $value;
         endforeach;
         $r = new \ReflectionClass($this);
-        return $this->request->send(lcfirst($r->getShortName()), $parameters);
+        $this->_sent = true;
+        return $this->_request->send(lcfirst($r->getShortName()), $parameters);
     }
 
     private function return($function, $value)
     {
-        $class = new (static::class)($this->request);
+        $class = new (static::class)($this->_request);
             $this->{$function} = $value;
         foreach ($this as $key => $value):
-            $class->{$key} = $value;
+            if (!in_array($key, ['_sent', '_returned'])) $class->{$key} = $value;
         endforeach;
+        $this->_returned = true;
         return $class;
+    }
+
+    public function __destruct()
+    {
+        if (!$this->_returned && !$this->_sent) $this->_send();
     }
 }

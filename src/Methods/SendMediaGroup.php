@@ -10,10 +10,13 @@ use EasyTel\Handler\Request;
  * @method SendMediaGroup disable_notification(bool $value) Sends messages <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
  * @method SendMediaGroup protect_content(bool $value) Protects the contents of the sent messages from forwarding and saving
  * @method SendMediaGroup message_effect_id(string $value) Unique identifier of the message effect to be added to the message; for private chats only
- * @method SendMediaGroup reply_parameters(string $value) Description of the message to reply to */
+ * @method SendMediaGroup reply_parameters(string $value) Description of the message to reply to
+ */
 class SendMediaGroup
 {
-    private Request $request;
+    private Request $_request;
+    private bool $_returned = false;
+    private bool $_sent = false;
     private int|string $chat_id;
     private string  $media;
     private string $business_connection_id;
@@ -22,9 +25,10 @@ class SendMediaGroup
     private bool $protect_content;
     private string $message_effect_id;
     private string $reply_parameters;
+    
     public function __construct(Request $request, int|string $chat_id, string  $media)
     {
-        $this->request = $request;
+        $this->_request = $request;
         $this->chat_id = $chat_id;
         $this->media = $media;
     }
@@ -38,19 +42,26 @@ class SendMediaGroup
     {
         $parameters = [];
         foreach ($this as $key => $value):
-            if (isset($this->{$key}) && $key != 'request') $parameters[$key] = $value;
+            if (isset($this->{$key}) && !in_array($key, ['_request', '_sent', '_returned'])) $parameters[$key] = $value;
         endforeach;
         $r = new \ReflectionClass($this);
-        return $this->request->send(lcfirst($r->getShortName()), $parameters);
+        $this->_sent = true;
+        return $this->_request->send(lcfirst($r->getShortName()), $parameters);
     }
 
     private function return($function, $value)
     {
-        $class = new (static::class)($this->request, $this->chat_id, $this->media);
+        $class = new (static::class)($this->_request, $this->chat_id, $this->media);
             $this->{$function} = $value;
         foreach ($this as $key => $value):
-            $class->{$key} = $value;
+            if (!in_array($key, ['_sent', '_returned'])) $class->{$key} = $value;
         endforeach;
+        $this->_returned = true;
         return $class;
+    }
+
+    public function __destruct()
+    {
+        if (!$this->_returned && !$this->_sent) $this->_send();
     }
 }

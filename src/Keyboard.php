@@ -16,9 +16,6 @@ class Keyboard
     public array $keyboard;
     public array $buttons;
     public int $format;
-    public const OUTPUT_JSON = 111;
-    public const OUTPUT_OBJECT = 112;
-    public const OUTPUT_ARRAY = 113;
     public const DEFAULT_KEYBOARD = [
         'keyboard' => [],
         'is_persistent' => null,
@@ -28,7 +25,7 @@ class Keyboard
         'selective' => null
     ];
 
-    public function __construct(array $keyboard = self::DEFAULT_KEYBOARD, array $buttons = [], int $format = self::OUTPUT_JSON
+    public function __construct(array $keyboard = self::DEFAULT_KEYBOARD, array $buttons = [], int $format = Telegram::OUTPUT_JSON
     )
     {
         $this->keyboard = $keyboard;
@@ -345,8 +342,8 @@ class Keyboard
     private function output($data)
     {
         return match ($this->format) {
-            self::OUTPUT_JSON => json::_out($data, true),
-            self::OUTPUT_OBJECT => json::_in(json::_out($data)),
+            Telegram::OUTPUT_JSON => json::_out($data, true),
+            Telegram::OUTPUT_OBJECT => json::_in(json::_out($data)),
             default => $data,
         };
     }

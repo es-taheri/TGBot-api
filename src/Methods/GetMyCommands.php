@@ -6,15 +6,19 @@ use EasyTel\Handler\Request;
 
 /**
  * @method GetMyCommands scope(string $value) A JSON-serialized object, describing scope of users. Defaults to <a href="https://core.telegram.org/bots/api#botcommandscopedefault">BotCommandScopeDefault</a>.
- * @method GetMyCommands language_code(string $value) A two-letter ISO 639-1 language code or an empty string */
+ * @method GetMyCommands language_code(string $value) A two-letter ISO 639-1 language code or an empty string
+ */
 class GetMyCommands
 {
-    private Request $request;
+    private Request $_request;
+    private bool $_returned = false;
+    private bool $_sent = false;
     private string $scope;
     private string $language_code;
+    
     public function __construct(Request $request)
     {
-        $this->request = $request;
+        $this->_request = $request;
         
     }
 
@@ -27,19 +31,26 @@ class GetMyCommands
     {
         $parameters = [];
         foreach ($this as $key => $value):
-            if (isset($this->{$key}) && $key != 'request') $parameters[$key] = $value;
+            if (isset($this->{$key}) && !in_array($key, ['_request', '_sent', '_returned'])) $parameters[$key] = $value;
         endforeach;
         $r = new \ReflectionClass($this);
-        return $this->request->send(lcfirst($r->getShortName()), $parameters);
+        $this->_sent = true;
+        return $this->_request->send(lcfirst($r->getShortName()), $parameters);
     }
 
     private function return($function, $value)
     {
-        $class = new (static::class)($this->request);
+        $class = new (static::class)($this->_request);
             $this->{$function} = $value;
         foreach ($this as $key => $value):
-            $class->{$key} = $value;
+            if (!in_array($key, ['_sent', '_returned'])) $class->{$key} = $value;
         endforeach;
+        $this->_returned = true;
         return $class;
+    }
+
+    public function __destruct()
+    {
+        if (!$this->_returned && !$this->_sent) $this->_send();
     }
 }
