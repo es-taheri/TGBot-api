@@ -12,6 +12,7 @@ use EasyTel\Handler\Request;
  * @method CopyMessage show_caption_above_media(bool $value) Pass <em>True</em>, if the caption must be shown above the message media. Ignored if a new caption isn&#39;t specified.
  * @method CopyMessage disable_notification(bool $value) Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
  * @method CopyMessage protect_content(bool $value) Protects the contents of the sent message from forwarding and saving
+ * @method CopyMessage allow_paid_broadcast(bool $value) Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
  * @method CopyMessage reply_parameters(string $value) Description of the message to reply to
  * @method CopyMessage reply_markup(string $value) Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
  */
@@ -30,9 +31,10 @@ class CopyMessage
     private bool $show_caption_above_media;
     private bool $disable_notification;
     private bool $protect_content;
+    private bool $allow_paid_broadcast;
     private string $reply_parameters;
     private string $reply_markup;
-    
+
     public function __construct(Request $request, int|string $chat_id, int|string $from_chat_id, int $message_id)
     {
         $this->_request = $request;

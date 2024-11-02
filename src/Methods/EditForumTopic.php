@@ -17,7 +17,7 @@ class EditForumTopic
     private int $message_thread_id;
     private string $name;
     private string $icon_custom_emoji_id;
-    
+
     public function __construct(Request $request, int|string $chat_id, int $message_thread_id)
     {
         $this->_request = $request;

@@ -12,7 +12,7 @@ class SetPassportDataErrors
     private bool $_sent = false;
     private int $user_id;
     private string  $errors;
-    
+
     public function __construct(Request $request, int $user_id, string  $errors)
     {
         $this->_request = $request;

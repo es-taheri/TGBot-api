@@ -21,7 +21,7 @@ class AnswerInlineQuery
     private bool $is_personal;
     private string $next_offset;
     private string $button;
-    
+
     public function __construct(Request $request, string $inline_query_id, string  $results)
     {
         $this->_request = $request;

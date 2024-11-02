@@ -46,7 +46,7 @@ class CreateInvoiceLink
     private bool $send_phone_number_to_provider;
     private bool $send_email_to_provider;
     private bool $is_flexible;
-    
+
     public function __construct(Request $request, string $title, string $description, string $payload, string $currency, string  $prices)
     {
         $this->_request = $request;

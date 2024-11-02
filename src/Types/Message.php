@@ -33,6 +33,7 @@ class Message
     public Animation $animation;
     public Audio $audio;
     public Document $document;
+    public PaidMediaInfo $paid_media;
     public array  $photo;
     public Sticker $sticker;
     public Story $story;
@@ -63,6 +64,7 @@ class Message
     public MaybeInaccessibleMessage $pinned_message;
     public Invoice $invoice;
     public SuccessfulPayment $successful_payment;
+    public RefundedPayment $refunded_payment;
     public UsersShared $users_shared;
     public ChatShared $chat_shared;
     public string $connected_website;
@@ -113,6 +115,7 @@ class Message
         if (isset($update['animation'])) $this->animation = new Animation($update['animation']);
         if (isset($update['audio'])) $this->audio = new Audio($update['audio']);
         if (isset($update['document'])) $this->document = new Document($update['document']);
+        if (isset($update['paid_media'])) $this->paid_media = new PaidMediaInfo($update['paid_media']);
         if (isset($update['sticker'])) $this->sticker = new Sticker($update['sticker']);
         if (isset($update['story'])) $this->story = new Story($update['story']);
         if (isset($update['video'])) $this->video = new Video($update['video']);
@@ -129,6 +132,7 @@ class Message
         if (isset($update['pinned_message'])) $this->pinned_message = new MaybeInaccessibleMessage($update['pinned_message']);
         if (isset($update['invoice'])) $this->invoice = new Invoice($update['invoice']);
         if (isset($update['successful_payment'])) $this->successful_payment = new SuccessfulPayment($update['successful_payment']);
+        if (isset($update['refunded_payment'])) $this->refunded_payment = new RefundedPayment($update['refunded_payment']);
         if (isset($update['users_shared'])) $this->users_shared = new UsersShared($update['users_shared']);
         if (isset($update['chat_shared'])) $this->chat_shared = new ChatShared($update['chat_shared']);
         if (isset($update['write_access_allowed'])) $this->write_access_allowed = new WriteAccessAllowed($update['write_access_allowed']);

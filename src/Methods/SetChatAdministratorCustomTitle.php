@@ -13,7 +13,7 @@ class SetChatAdministratorCustomTitle
     private int|string $chat_id;
     private int $user_id;
     private string $custom_title;
-    
+
     public function __construct(Request $request, int|string $chat_id, int $user_id, string $custom_title)
     {
         $this->_request = $request;

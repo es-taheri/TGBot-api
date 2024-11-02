@@ -14,7 +14,7 @@ class ReplaceStickerInSet
     private string $name;
     private string $old_sticker;
     private string $sticker;
-    
+
     public function __construct(Request $request, int $user_id, string $name, string $old_sticker, string $sticker)
     {
         $this->_request = $request;

@@ -16,7 +16,7 @@ class SetMyCommands
     private string  $commands;
     private string $scope;
     private string $language_code;
-    
+
     public function __construct(Request $request, string  $commands)
     {
         $this->_request = $request;

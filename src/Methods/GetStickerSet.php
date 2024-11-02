@@ -11,7 +11,7 @@ class GetStickerSet
     private bool $_returned = false;
     private bool $_sent = false;
     private string $name;
-    
+
     public function __construct(Request $request, string $name)
     {
         $this->_request = $request;

@@ -7,5 +7,5 @@
 
 An easy to use php library for using [telegram bot api](https://core.telegram.org/bots/api)
 
-[![API Version](https://img.shields.io/badge/Bot%20API-7.5%20%28June%202024%29-32a2da.svg)](https://core.telegram.org/bots/api#june-18-2024)
-[![Join Telegram channel](https://img.shields.io/badge/telegram-@easytel-64659d.svg)](https://telegram.me/PHP_Telegram_Bot_Support)
+[![API Version](https://img.shields.io/badge/Bot%20API-7.11%20%28October%202024%29-32a2da.svg)](https://core.telegram.org/bots/api-changelog#october-31-2024)
+[![Join Telegram channel](https://img.shields.io/badge/telegram-@easytel-64659d.svg)](https://t.me/EasyTel_lib)

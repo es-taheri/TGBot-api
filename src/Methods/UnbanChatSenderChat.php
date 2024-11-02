@@ -12,7 +12,7 @@ class UnbanChatSenderChat
     private bool $_sent = false;
     private int|string $chat_id;
     private int $sender_chat_id;
-    
+
     public function __construct(Request $request, int|string $chat_id, int $sender_chat_id)
     {
         $this->_request = $request;

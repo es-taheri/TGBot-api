@@ -15,7 +15,7 @@ class DeleteMyCommands
     private bool $_sent = false;
     private string $scope;
     private string $language_code;
-    
+
     public function __construct(Request $request)
     {
         $this->_request = $request;

@@ -19,7 +19,7 @@ class CreateNewStickerSet
     private string  $stickers;
     private string $sticker_type;
     private bool $needs_repainting;
-    
+
     public function __construct(Request $request, int $user_id, string $name, string $title, string  $stickers)
     {
         $this->_request = $request;

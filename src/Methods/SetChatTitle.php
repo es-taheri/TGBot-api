@@ -12,7 +12,7 @@ class SetChatTitle
     private bool $_sent = false;
     private int|string $chat_id;
     private string $title;
-    
+
     public function __construct(Request $request, int|string $chat_id, string $title)
     {
         $this->_request = $request;

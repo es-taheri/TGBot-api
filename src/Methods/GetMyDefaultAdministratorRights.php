@@ -13,7 +13,7 @@ class GetMyDefaultAdministratorRights
     private bool $_returned = false;
     private bool $_sent = false;
     private bool $for_channels;
-    
+
     public function __construct(Request $request)
     {
         $this->_request = $request;

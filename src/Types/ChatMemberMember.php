@@ -6,6 +6,7 @@ class ChatMemberMember
 {
     public string $status;
     public User $user;
+    public int $until_date;
     
     public function __construct(array $update)
     {

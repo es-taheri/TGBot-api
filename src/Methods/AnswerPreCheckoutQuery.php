@@ -15,7 +15,7 @@ class AnswerPreCheckoutQuery
     private string $pre_checkout_query_id;
     private bool $ok;
     private string $error_message;
-    
+
     public function __construct(Request $request, string $pre_checkout_query_id, bool $ok)
     {
         $this->_request = $request;

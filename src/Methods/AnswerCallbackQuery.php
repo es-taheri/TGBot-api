@@ -13,13 +13,13 @@ use EasyTel\Handler\Request;
 class AnswerCallbackQuery
 {
     private Request $_request;
+    private bool $_returned = false;
+    private bool $_sent = false;
     private string $callback_query_id;
     private string $text;
     private bool $show_alert;
     private string $url;
     private int $cache_time;
-    private bool $_returned = false;
-    private bool $_sent = false;
 
     public function __construct(Request $request, string $callback_query_id)
     {
@@ -46,7 +46,7 @@ class AnswerCallbackQuery
     private function return($function, $value)
     {
         $class = new (static::class)($this->_request, $this->callback_query_id);
-        $this->{$function} = $value;
+            $this->{$function} = $value;
         foreach ($this as $key => $value):
             if (!in_array($key, ['_sent', '_returned'])) $class->{$key} = $value;
         endforeach;

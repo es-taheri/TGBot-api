@@ -17,7 +17,7 @@ class BanChatMember
     private int $user_id;
     private int $until_date;
     private bool $revoke_messages;
-    
+
     public function __construct(Request $request, int|string $chat_id, int $user_id)
     {
         $this->_request = $request;

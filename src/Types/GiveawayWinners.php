@@ -10,6 +10,7 @@ class GiveawayWinners
     public int $winner_count;
     public array  $winners;
     public int $additional_chat_count;
+    public int $prize_star_count;
     public int $premium_subscription_month_count;
     public int $unclaimed_prize_count;
     public True $only_new_members;

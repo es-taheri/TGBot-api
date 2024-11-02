@@ -12,7 +12,7 @@ class RefundStarPayment
     private bool $_sent = false;
     private int $user_id;
     private string $telegram_payment_charge_id;
-    
+
     public function __construct(Request $request, int $user_id, string $telegram_payment_charge_id)
     {
         $this->_request = $request;

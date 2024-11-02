@@ -5,6 +5,7 @@ namespace EasyTel\Methods;
 use EasyTel\Handler\Request;
 
 /**
+ * @method StopPoll business_connection_id(string $value) Unique identifier of the business connection on behalf of which the message to be edited was sent
  * @method StopPoll reply_markup(string $value) A JSON-serialized object for a new message <a href="/bots/features#inline-keyboards">inline keyboard</a>.
  */
 class StopPoll
@@ -14,8 +15,9 @@ class StopPoll
     private bool $_sent = false;
     private int|string $chat_id;
     private int $message_id;
+    private string $business_connection_id;
     private string $reply_markup;
-    
+
     public function __construct(Request $request, int|string $chat_id, int $message_id)
     {
         $this->_request = $request;

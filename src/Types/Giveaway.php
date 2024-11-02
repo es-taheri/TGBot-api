@@ -11,6 +11,7 @@ class Giveaway
     public True $has_public_winners;
     public string $prize_description;
     public array  $country_codes;
+    public int $prize_star_count;
     public int $premium_subscription_month_count;
     
     public function __construct(array $update)

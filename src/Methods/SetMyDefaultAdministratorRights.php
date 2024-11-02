@@ -15,7 +15,7 @@ class SetMyDefaultAdministratorRights
     private bool $_sent = false;
     private string $rights;
     private bool $for_channels;
-    
+
     public function __construct(Request $request)
     {
         $this->_request = $request;

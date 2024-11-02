@@ -14,7 +14,7 @@ class SetStickerMaskPosition
     private bool $_sent = false;
     private string $sticker;
     private string $mask_position;
-    
+
     public function __construct(Request $request, string $sticker)
     {
         $this->_request = $request;

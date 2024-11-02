@@ -24,6 +24,7 @@ use EasyTel\Handler\Request;
  * @method SendInvoice is_flexible(bool $value) Pass <em>True</em> if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
  * @method SendInvoice disable_notification(bool $value) Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
  * @method SendInvoice protect_content(bool $value) Protects the contents of the sent message from forwarding and saving
+ * @method SendInvoice allow_paid_broadcast(bool $value) Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
  * @method SendInvoice message_effect_id(string $value) Unique identifier of the message effect to be added to the message; for private chats only
  * @method SendInvoice reply_parameters(string $value) Description of the message to reply to
  * @method SendInvoice reply_markup(string $value) A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Pay <code>total price</code>&#39; button will be shown. If not empty, the first button must be a Pay button.
@@ -58,10 +59,11 @@ class SendInvoice
     private bool $is_flexible;
     private bool $disable_notification;
     private bool $protect_content;
+    private bool $allow_paid_broadcast;
     private string $message_effect_id;
     private string $reply_parameters;
     private string $reply_markup;
-    
+
     public function __construct(Request $request, int|string $chat_id, string $title, string $description, string $payload, string $currency, string  $prices)
     {
         $this->_request = $request;

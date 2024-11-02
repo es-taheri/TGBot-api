@@ -14,7 +14,7 @@ class SetCustomEmojiStickerSetThumbnail
     private bool $_sent = false;
     private string $name;
     private string $custom_emoji_id;
-    
+
     public function __construct(Request $request, string $name)
     {
         $this->_request = $request;

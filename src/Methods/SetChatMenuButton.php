@@ -15,7 +15,7 @@ class SetChatMenuButton
     private bool $_sent = false;
     private int $chat_id;
     private string $menu_button;
-    
+
     public function __construct(Request $request)
     {
         $this->_request = $request;

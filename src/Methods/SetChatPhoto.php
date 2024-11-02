@@ -12,7 +12,7 @@ class SetChatPhoto
     private bool $_sent = false;
     private int|string $chat_id;
     private mixed $photo;
-    
+
     public function __construct(Request $request, int|string $chat_id, mixed $photo)
     {
         $this->_request = $request;

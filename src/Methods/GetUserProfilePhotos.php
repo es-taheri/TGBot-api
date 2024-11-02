@@ -16,7 +16,7 @@ class GetUserProfilePhotos
     private int $user_id;
     private int $offset;
     private int $limit;
-    
+
     public function __construct(Request $request, int $user_id)
     {
         $this->_request = $request;

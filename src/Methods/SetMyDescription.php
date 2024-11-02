@@ -15,7 +15,7 @@ class SetMyDescription
     private bool $_sent = false;
     private string $description;
     private string $language_code;
-    
+
     public function __construct(Request $request)
     {
         $this->_request = $request;

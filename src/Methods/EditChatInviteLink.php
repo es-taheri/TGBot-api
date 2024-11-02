@@ -21,7 +21,7 @@ class EditChatInviteLink
     private int $expire_date;
     private int $member_limit;
     private bool $creates_join_request;
-    
+
     public function __construct(Request $request, int|string $chat_id, string $invite_link)
     {
         $this->_request = $request;

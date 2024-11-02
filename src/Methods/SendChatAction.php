@@ -17,7 +17,7 @@ class SendChatAction
     private string $action;
     private string $business_connection_id;
     private int $message_thread_id;
-    
+
     public function __construct(Request $request, int|string $chat_id, string $action)
     {
         $this->_request = $request;

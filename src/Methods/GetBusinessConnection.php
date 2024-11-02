@@ -11,7 +11,7 @@ class GetBusinessConnection
     private bool $_returned = false;
     private bool $_sent = false;
     private string $business_connection_id;
-    
+
     public function __construct(Request $request, string $business_connection_id)
     {
         $this->_request = $request;

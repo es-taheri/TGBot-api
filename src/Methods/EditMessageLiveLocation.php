@@ -5,6 +5,7 @@ namespace EasyTel\Methods;
 use EasyTel\Handler\Request;
 
 /**
+ * @method EditMessageLiveLocation business_connection_id(string $value) Unique identifier of the business connection on behalf of which the message to be edited was sent
  * @method EditMessageLiveLocation chat_id(int|string $value) Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)
  * @method EditMessageLiveLocation message_id(int $value) Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit
  * @method EditMessageLiveLocation inline_message_id(string $value) Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message
@@ -21,6 +22,7 @@ class EditMessageLiveLocation
     private bool $_sent = false;
     private Float $latitude;
     private Float $longitude;
+    private string $business_connection_id;
     private int|string $chat_id;
     private int $message_id;
     private string $inline_message_id;
@@ -29,7 +31,7 @@ class EditMessageLiveLocation
     private int $heading;
     private int $proximity_alert_radius;
     private string $reply_markup;
-    
+
     public function __construct(Request $request, Float $latitude, Float $longitude)
     {
         $this->_request = $request;

@@ -20,6 +20,7 @@ class Update
     public CallbackQuery $callback_query;
     public ShippingQuery $shipping_query;
     public PreCheckoutQuery $pre_checkout_query;
+    public PaidMediaPurchased $purchased_paid_media;
     public Poll $poll;
     public PollAnswer $poll_answer;
     public ChatMemberUpdated $my_chat_member;
@@ -54,6 +55,7 @@ class Update
         if (isset($update['callback_query'])) $this->callback_query = new CallbackQuery($update['callback_query']);
         if (isset($update['shipping_query'])) $this->shipping_query = new ShippingQuery($update['shipping_query']);
         if (isset($update['pre_checkout_query'])) $this->pre_checkout_query = new PreCheckoutQuery($update['pre_checkout_query']);
+        if (isset($update['purchased_paid_media'])) $this->purchased_paid_media = new PaidMediaPurchased($update['purchased_paid_media']);
         if (isset($update['poll'])) $this->poll = new Poll($update['poll']);
         if (isset($update['poll_answer'])) $this->poll_answer = new PollAnswer($update['poll_answer']);
         if (isset($update['my_chat_member'])) $this->my_chat_member = new ChatMemberUpdated($update['my_chat_member']);

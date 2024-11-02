@@ -16,6 +16,7 @@ class User
     public bool $can_read_all_group_messages;
     public bool $supports_inline_queries;
     public bool $can_connect_to_business;
+    public bool $has_main_web_app;
     
     public function __construct(array $update)
     {

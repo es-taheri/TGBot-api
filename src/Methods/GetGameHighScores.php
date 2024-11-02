@@ -18,7 +18,7 @@ class GetGameHighScores
     private int $chat_id;
     private int $message_id;
     private string $inline_message_id;
-    
+
     public function __construct(Request $request, int $user_id)
     {
         $this->_request = $request;

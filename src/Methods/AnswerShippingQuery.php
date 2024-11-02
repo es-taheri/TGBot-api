@@ -17,7 +17,7 @@ class AnswerShippingQuery
     private bool $ok;
     private string  $shipping_options;
     private string $error_message;
-    
+
     public function __construct(Request $request, string $shipping_query_id, bool $ok)
     {
         $this->_request = $request;

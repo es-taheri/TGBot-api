@@ -23,7 +23,7 @@ class SetGameScore
     private int $chat_id;
     private int $message_id;
     private string $inline_message_id;
-    
+
     public function __construct(Request $request, int $user_id, int $score)
     {
         $this->_request = $request;

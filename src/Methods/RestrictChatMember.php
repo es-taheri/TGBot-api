@@ -18,7 +18,7 @@ class RestrictChatMember
     private string $permissions;
     private bool $use_independent_chat_permissions;
     private int $until_date;
-    
+
     public function __construct(Request $request, int|string $chat_id, int $user_id, string $permissions)
     {
         $this->_request = $request;

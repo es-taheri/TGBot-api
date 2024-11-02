@@ -35,6 +35,7 @@ class ChatFullInfo
     public string $invite_link;
     public Message $pinned_message;
     public ChatPermissions $permissions;
+    public True $can_send_paid_media;
     public int $slow_mode_delay;
     public int $unrestrict_boost_count;
     public int $message_auto_delete_time;

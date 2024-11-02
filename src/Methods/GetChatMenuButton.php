@@ -13,7 +13,7 @@ class GetChatMenuButton
     private bool $_returned = false;
     private bool $_sent = false;
     private int $chat_id;
-    
+
     public function __construct(Request $request)
     {
         $this->_request = $request;

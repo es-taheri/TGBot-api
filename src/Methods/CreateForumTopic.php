@@ -17,7 +17,7 @@ class CreateForumTopic
     private string $name;
     private int $icon_color;
     private string $icon_custom_emoji_id;
-    
+
     public function __construct(Request $request, int|string $chat_id, string $name)
     {
         $this->_request = $request;

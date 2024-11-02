@@ -15,7 +15,7 @@ class SetMyName
     private bool $_sent = false;
     private string $name;
     private string $language_code;
-    
+
     public function __construct(Request $request)
     {
         $this->_request = $request;

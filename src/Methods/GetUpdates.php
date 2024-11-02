@@ -19,7 +19,7 @@ class GetUpdates
     private int $limit;
     private int $timeout;
     private string  $allowed_updates;
-    
+
     public function __construct(Request $request)
     {
         $this->_request = $request;

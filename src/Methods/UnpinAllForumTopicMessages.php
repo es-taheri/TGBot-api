@@ -12,7 +12,7 @@ class UnpinAllForumTopicMessages
     private bool $_sent = false;
     private int|string $chat_id;
     private int $message_thread_id;
-    
+
     public function __construct(Request $request, int|string $chat_id, int $message_thread_id)
     {
         $this->_request = $request;

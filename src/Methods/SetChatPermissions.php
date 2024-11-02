@@ -15,7 +15,7 @@ class SetChatPermissions
     private int|string $chat_id;
     private string $permissions;
     private bool $use_independent_chat_permissions;
-    
+
     public function __construct(Request $request, int|string $chat_id, string $permissions)
     {
         $this->_request = $request;

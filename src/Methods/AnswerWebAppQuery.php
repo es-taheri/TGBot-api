@@ -12,7 +12,7 @@ class AnswerWebAppQuery
     private bool $_sent = false;
     private string $web_app_query_id;
     private string $result;
-    
+
     public function __construct(Request $request, string $web_app_query_id, string $result)
     {
         $this->_request = $request;

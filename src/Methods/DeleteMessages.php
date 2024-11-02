@@ -12,7 +12,7 @@ class DeleteMessages
     private bool $_sent = false;
     private int|string $chat_id;
     private string  $message_ids;
-    
+
     public function __construct(Request $request, int|string $chat_id, string  $message_ids)
     {
         $this->_request = $request;

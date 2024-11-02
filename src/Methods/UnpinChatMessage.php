@@ -5,7 +5,8 @@ namespace EasyTel\Methods;
 use EasyTel\Handler\Request;
 
 /**
- * @method UnpinChatMessage message_id(int $value) Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.
+ * @method UnpinChatMessage business_connection_id(string $value) Unique identifier of the business connection on behalf of which the message will be unpinned
+ * @method UnpinChatMessage message_id(int $value) Identifier of the message to unpin. Required if <em>business_connection_id</em> is specified. If not specified, the most recent pinned message (by sending date) will be unpinned.
  */
 class UnpinChatMessage
 {
@@ -13,8 +14,9 @@ class UnpinChatMessage
     private bool $_returned = false;
     private bool $_sent = false;
     private int|string $chat_id;
+    private string $business_connection_id;
     private int $message_id;
-    
+
     public function __construct(Request $request, int|string $chat_id)
     {
         $this->_request = $request;

@@ -12,7 +12,7 @@ class SetStickerPositionInSet
     private bool $_sent = false;
     private string $sticker;
     private int $position;
-    
+
     public function __construct(Request $request, string $sticker, int $position)
     {
         $this->_request = $request;

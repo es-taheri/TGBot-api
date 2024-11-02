@@ -13,7 +13,7 @@ class DeleteWebhook
     private bool $_returned = false;
     private bool $_sent = false;
     private bool $drop_pending_updates;
-    
+
     public function __construct(Request $request)
     {
         $this->_request = $request;

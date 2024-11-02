@@ -11,6 +11,7 @@ class ExternalReplyInfo
     public Animation $animation;
     public Audio $audio;
     public Document $document;
+    public PaidMediaInfo $paid_media;
     public array  $photo;
     public Sticker $sticker;
     public Story $story;
@@ -45,6 +46,7 @@ class ExternalReplyInfo
         if (isset($update['animation'])) $this->animation = new Animation($update['animation']);
         if (isset($update['audio'])) $this->audio = new Audio($update['audio']);
         if (isset($update['document'])) $this->document = new Document($update['document']);
+        if (isset($update['paid_media'])) $this->paid_media = new PaidMediaInfo($update['paid_media']);
         if (isset($update['sticker'])) $this->sticker = new Sticker($update['sticker']);
         if (isset($update['story'])) $this->story = new Story($update['story']);
         if (isset($update['video'])) $this->video = new Video($update['video']);

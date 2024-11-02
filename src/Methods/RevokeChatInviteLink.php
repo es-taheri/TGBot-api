@@ -12,7 +12,7 @@ class RevokeChatInviteLink
     private bool $_sent = false;
     private int|string $chat_id;
     private string $invite_link;
-    
+
     public function __construct(Request $request, int|string $chat_id, string $invite_link)
     {
         $this->_request = $request;

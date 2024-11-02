@@ -24,7 +24,7 @@ class SetWebhook
     private string  $allowed_updates;
     private bool $drop_pending_updates;
     private string $secret_token;
-    
+
     public function __construct(Request $request, string $url)
     {
         $this->_request = $request;

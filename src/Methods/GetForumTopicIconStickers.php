@@ -10,7 +10,7 @@ class GetForumTopicIconStickers
     private Request $_request;
     private bool $_returned = false;
     private bool $_sent = false;
-    
+
     public function __construct(Request $request)
     {
         $this->_request = $request;

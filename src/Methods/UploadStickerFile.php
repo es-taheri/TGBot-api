@@ -13,7 +13,7 @@ class UploadStickerFile
     private int $user_id;
     private mixed $sticker;
     private string $sticker_format;
-    
+
     public function __construct(Request $request, int $user_id, mixed $sticker, string $sticker_format)
     {
         $this->_request = $request;

@@ -13,7 +13,7 @@ class GetMyShortDescription
     private bool $_returned = false;
     private bool $_sent = false;
     private string $language_code;
-    
+
     public function __construct(Request $request)
     {
         $this->_request = $request;

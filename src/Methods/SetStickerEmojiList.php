@@ -12,7 +12,7 @@ class SetStickerEmojiList
     private bool $_sent = false;
     private string $sticker;
     private string  $emoji_list;
-    
+
     public function __construct(Request $request, string $sticker, string  $emoji_list)
     {
         $this->_request = $request;

@@ -11,7 +11,7 @@ class GetChatAdministrators
     private bool $_returned = false;
     private bool $_sent = false;
     private int|string $chat_id;
-    
+
     public function __construct(Request $request, int|string $chat_id)
     {
         $this->_request = $request;

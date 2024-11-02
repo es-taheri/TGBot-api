@@ -43,7 +43,7 @@ class PromoteChatMember
     private bool $can_edit_messages;
     private bool $can_pin_messages;
     private bool $can_manage_topics;
-    
+
     public function __construct(Request $request, int|string $chat_id, int $user_id)
     {
         $this->_request = $request;

@@ -11,7 +11,7 @@ class GetCustomEmojiStickers
     private bool $_returned = false;
     private bool $_sent = false;
     private string  $custom_emoji_ids;
-    
+
     public function __construct(Request $request, string  $custom_emoji_ids)
     {
         $this->_request = $request;

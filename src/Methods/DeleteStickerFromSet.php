@@ -11,7 +11,7 @@ class DeleteStickerFromSet
     private bool $_returned = false;
     private bool $_sent = false;
     private string $sticker;
-    
+
     public function __construct(Request $request, string $sticker)
     {
         $this->_request = $request;

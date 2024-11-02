@@ -20,7 +20,7 @@ class ForwardMessage
     private int $message_thread_id;
     private bool $disable_notification;
     private bool $protect_content;
-    
+
     public function __construct(Request $request, int|string $chat_id, int|string $from_chat_id, int $message_id)
     {
         $this->_request = $request;

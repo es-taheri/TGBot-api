@@ -4,7 +4,7 @@ namespace EasyTel\Types;
 
 class GiveawayCreated
 {
-    
+    public int $prize_star_count;
     
     public function __construct(array $update)
     {

@@ -12,7 +12,7 @@ class SetStickerSetTitle
     private bool $_sent = false;
     private string $name;
     private string $title;
-    
+
     public function __construct(Request $request, string $name, string $title)
     {
         $this->_request = $request;

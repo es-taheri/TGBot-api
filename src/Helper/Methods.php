@@ -25,6 +25,7 @@ use EasyTel\Methods\SendVideo;
 use EasyTel\Methods\SendAnimation;
 use EasyTel\Methods\SendVoice;
 use EasyTel\Methods\SendVideoNote;
+use EasyTel\Methods\SendPaidMedia;
 use EasyTel\Methods\SendMediaGroup;
 use EasyTel\Methods\SendLocation;
 use EasyTel\Methods\SendVenue;
@@ -46,6 +47,8 @@ use EasyTel\Methods\SetChatPermissions;
 use EasyTel\Methods\ExportChatInviteLink;
 use EasyTel\Methods\CreateChatInviteLink;
 use EasyTel\Methods\EditChatInviteLink;
+use EasyTel\Methods\CreateChatSubscriptionInviteLink;
+use EasyTel\Methods\EditChatSubscriptionInviteLink;
 use EasyTel\Methods\RevokeChatInviteLink;
 use EasyTel\Methods\ApproveChatJoinRequest;
 use EasyTel\Methods\DeclineChatJoinRequest;
@@ -123,6 +126,7 @@ use EasyTel\Methods\SendInvoice;
 use EasyTel\Methods\CreateInvoiceLink;
 use EasyTel\Methods\AnswerShippingQuery;
 use EasyTel\Methods\AnswerPreCheckoutQuery;
+use EasyTel\Methods\GetStarTransactions;
 use EasyTel\Methods\RefundStarPayment;
 use EasyTel\Methods\SetPassportDataErrors;
 use EasyTel\Methods\SendGame;
@@ -150,7 +154,7 @@ class Methods
      */
     public function getUpdates(): GetUpdates
     {
-        return new GetUpdates($this->request);
+        return new GetUpdates($this->_request);
     }
 
     /**
@@ -162,7 +166,7 @@ class Methods
      */
     public function setWebhook(string $url): SetWebhook
     {
-        return new SetWebhook($this->request, $url);
+        return new SetWebhook($this->_request, $url);
     }
 
     /**
@@ -175,7 +179,7 @@ class Methods
      */
     public function deleteWebhook(): DeleteWebhook
     {
-        return new DeleteWebhook($this->request);
+        return new DeleteWebhook($this->_request);
     }
 
     /**
@@ -188,7 +192,7 @@ class Methods
      */
     public function getWebhookInfo(): GetWebhookInfo
     {
-        return new GetWebhookInfo($this->request);
+        return new GetWebhookInfo($this->_request);
     }
 
     /**
@@ -201,7 +205,7 @@ class Methods
      */
     public function getMe(): GetMe
     {
-        return new GetMe($this->request);
+        return new GetMe($this->_request);
     }
 
     /**
@@ -214,7 +218,7 @@ class Methods
      */
     public function logOut(): LogOut
     {
-        return new LogOut($this->request);
+        return new LogOut($this->_request);
     }
 
     /**
@@ -227,7 +231,7 @@ class Methods
      */
     public function close(): Close
     {
-        return new Close($this->request);
+        return new Close($this->_request);
     }
 
     /**
@@ -240,7 +244,7 @@ class Methods
      */
     public function sendMessage(int|string $chat_id, string $text): SendMessage
     {
-        return new SendMessage($this->request, $chat_id, $text);
+        return new SendMessage($this->_request, $chat_id, $text);
     }
 
     /**
@@ -254,7 +258,7 @@ class Methods
      */
     public function forwardMessage(int|string $chat_id, int|string $from_chat_id, int $message_id): ForwardMessage
     {
-        return new ForwardMessage($this->request, $chat_id, $from_chat_id, $message_id);
+        return new ForwardMessage($this->_request, $chat_id, $from_chat_id, $message_id);
     }
 
     /**
@@ -268,11 +272,11 @@ class Methods
      */
     public function forwardMessages(int|string $chat_id, int|string $from_chat_id, string  $message_ids): ForwardMessages
     {
-        return new ForwardMessages($this->request, $chat_id, $from_chat_id, $message_ids);
+        return new ForwardMessages($this->_request, $chat_id, $from_chat_id, $message_ids);
     }
 
     /**
-     * Use this method to copy messages of any kind. Service messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="https://core.telegram.org/bots/api#poll">poll</a> can be copied only if the value of the field <em>correct_option_id</em> is known to the bot. The method is analogous to the method <a href="https://core.telegram.org/bots/api#forwardmessage">forwardMessage</a>, but the copied message doesn&#39;t have a link to the original message. Returns the <a href="https://core.telegram.org/bots/api#messageid">MessageId</a> of the sent message on success.
+     * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="https://core.telegram.org/bots/api#poll">poll</a> can be copied only if the value of the field <em>correct_option_id</em> is known to the bot. The method is analogous to the method <a href="https://core.telegram.org/bots/api#forwardmessage">forwardMessage</a>, but the copied message doesn&#39;t have a link to the original message. Returns the <a href="https://core.telegram.org/bots/api#messageid">MessageId</a> of the sent message on success.
      *
      * @param int|string $chat_id
      * @param int|string $from_chat_id
@@ -282,11 +286,11 @@ class Methods
      */
     public function copyMessage(int|string $chat_id, int|string $from_chat_id, int $message_id): CopyMessage
     {
-        return new CopyMessage($this->request, $chat_id, $from_chat_id, $message_id);
+        return new CopyMessage($this->_request, $chat_id, $from_chat_id, $message_id);
     }
 
     /**
-     * Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="https://core.telegram.org/bots/api#poll">poll</a> can be copied only if the value of the field <em>correct_option_id</em> is known to the bot. The method is analogous to the method <a href="https://core.telegram.org/bots/api#forwardmessages">forwardMessages</a>, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an array of <a href="https://core.telegram.org/bots/api#messageid">MessageId</a> of the sent messages is returned.
+     * Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="https://core.telegram.org/bots/api#poll">poll</a> can be copied only if the value of the field <em>correct_option_id</em> is known to the bot. The method is analogous to the method <a href="https://core.telegram.org/bots/api#forwardmessages">forwardMessages</a>, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an array of <a href="https://core.telegram.org/bots/api#messageid">MessageId</a> of the sent messages is returned.
      *
      * @param int|string $chat_id
      * @param int|string $from_chat_id
@@ -296,7 +300,7 @@ class Methods
      */
     public function copyMessages(int|string $chat_id, int|string $from_chat_id, string  $message_ids): CopyMessages
     {
-        return new CopyMessages($this->request, $chat_id, $from_chat_id, $message_ids);
+        return new CopyMessages($this->_request, $chat_id, $from_chat_id, $message_ids);
     }
 
     /**
@@ -309,7 +313,7 @@ class Methods
      */
     public function sendPhoto(int|string $chat_id, mixed $photo): SendPhoto
     {
-        return new SendPhoto($this->request, $chat_id, $photo);
+        return new SendPhoto($this->_request, $chat_id, $photo);
     }
 
     /**
@@ -322,7 +326,7 @@ class Methods
      */
     public function sendAudio(int|string $chat_id, mixed $audio): SendAudio
     {
-        return new SendAudio($this->request, $chat_id, $audio);
+        return new SendAudio($this->_request, $chat_id, $audio);
     }
 
     /**
@@ -335,7 +339,7 @@ class Methods
      */
     public function sendDocument(int|string $chat_id, mixed $document): SendDocument
     {
-        return new SendDocument($this->request, $chat_id, $document);
+        return new SendDocument($this->_request, $chat_id, $document);
     }
 
     /**
@@ -348,7 +352,7 @@ class Methods
      */
     public function sendVideo(int|string $chat_id, mixed $video): SendVideo
     {
-        return new SendVideo($this->request, $chat_id, $video);
+        return new SendVideo($this->_request, $chat_id, $video);
     }
 
     /**
@@ -361,7 +365,7 @@ class Methods
      */
     public function sendAnimation(int|string $chat_id, mixed $animation): SendAnimation
     {
-        return new SendAnimation($this->request, $chat_id, $animation);
+        return new SendAnimation($this->_request, $chat_id, $animation);
     }
 
     /**
@@ -374,7 +378,7 @@ class Methods
      */
     public function sendVoice(int|string $chat_id, mixed $voice): SendVoice
     {
-        return new SendVoice($this->request, $chat_id, $voice);
+        return new SendVoice($this->_request, $chat_id, $voice);
     }
 
     /**
@@ -387,7 +391,21 @@ class Methods
      */
     public function sendVideoNote(int|string $chat_id, mixed $video_note): SendVideoNote
     {
-        return new SendVideoNote($this->request, $chat_id, $video_note);
+        return new SendVideoNote($this->_request, $chat_id, $video_note);
+    }
+
+    /**
+     * Use this method to send paid media. On success, the sent <a href="https://core.telegram.org/bots/api#message">Message</a> is returned.
+     *
+     * @param int|string $chat_id
+     * @param int $star_count
+     * @param string  $media
+     * @return mixed
+     * @link https://core.telegram.org/bots/api#sendpaidmedia
+     */
+    public function sendPaidMedia(int|string $chat_id, int $star_count, string  $media): SendPaidMedia
+    {
+        return new SendPaidMedia($this->_request, $chat_id, $star_count, $media);
     }
 
     /**
@@ -400,7 +418,7 @@ class Methods
      */
     public function sendMediaGroup(int|string $chat_id, string  $media): SendMediaGroup
     {
-        return new SendMediaGroup($this->request, $chat_id, $media);
+        return new SendMediaGroup($this->_request, $chat_id, $media);
     }
 
     /**
@@ -414,7 +432,7 @@ class Methods
      */
     public function sendLocation(int|string $chat_id, Float $latitude, Float $longitude): SendLocation
     {
-        return new SendLocation($this->request, $chat_id, $latitude, $longitude);
+        return new SendLocation($this->_request, $chat_id, $latitude, $longitude);
     }
 
     /**
@@ -430,7 +448,7 @@ class Methods
      */
     public function sendVenue(int|string $chat_id, Float $latitude, Float $longitude, string $title, string $address): SendVenue
     {
-        return new SendVenue($this->request, $chat_id, $latitude, $longitude, $title, $address);
+        return new SendVenue($this->_request, $chat_id, $latitude, $longitude, $title, $address);
     }
 
     /**
@@ -444,7 +462,7 @@ class Methods
      */
     public function sendContact(int|string $chat_id, string $phone_number, string $first_name): SendContact
     {
-        return new SendContact($this->request, $chat_id, $phone_number, $first_name);
+        return new SendContact($this->_request, $chat_id, $phone_number, $first_name);
     }
 
     /**
@@ -458,7 +476,7 @@ class Methods
      */
     public function sendPoll(int|string $chat_id, string $question, string  $options): SendPoll
     {
-        return new SendPoll($this->request, $chat_id, $question, $options);
+        return new SendPoll($this->_request, $chat_id, $question, $options);
     }
 
     /**
@@ -470,7 +488,7 @@ class Methods
      */
     public function sendDice(int|string $chat_id): SendDice
     {
-        return new SendDice($this->request, $chat_id);
+        return new SendDice($this->_request, $chat_id);
     }
 
     /**
@@ -483,11 +501,11 @@ class Methods
      */
     public function sendChatAction(int|string $chat_id, string $action): SendChatAction
     {
-        return new SendChatAction($this->request, $chat_id, $action);
+        return new SendChatAction($this->_request, $chat_id, $action);
     }
 
     /**
-     * Use this method to change the chosen reactions on a message. Service messages can&#39;t be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Returns <em>True</em> on success.
+     * Use this method to change the chosen reactions on a message. Service messages can&#39;t be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can&#39;t use paid reactions. Returns <em>True</em> on success.
      *
      * @param int|string $chat_id
      * @param int $message_id
@@ -496,7 +514,7 @@ class Methods
      */
     public function setMessageReaction(int|string $chat_id, int $message_id): SetMessageReaction
     {
-        return new SetMessageReaction($this->request, $chat_id, $message_id);
+        return new SetMessageReaction($this->_request, $chat_id, $message_id);
     }
 
     /**
@@ -508,7 +526,7 @@ class Methods
      */
     public function getUserProfilePhotos(int $user_id): GetUserProfilePhotos
     {
-        return new GetUserProfilePhotos($this->request, $user_id);
+        return new GetUserProfilePhotos($this->_request, $user_id);
     }
 
     /**
@@ -520,7 +538,7 @@ class Methods
      */
     public function getFile(string $file_id): GetFile
     {
-        return new GetFile($this->request, $file_id);
+        return new GetFile($this->_request, $file_id);
     }
 
     /**
@@ -533,7 +551,7 @@ class Methods
      */
     public function banChatMember(int|string $chat_id, int $user_id): BanChatMember
     {
-        return new BanChatMember($this->request, $chat_id, $user_id);
+        return new BanChatMember($this->_request, $chat_id, $user_id);
     }
 
     /**
@@ -546,7 +564,7 @@ class Methods
      */
     public function unbanChatMember(int|string $chat_id, int $user_id): UnbanChatMember
     {
-        return new UnbanChatMember($this->request, $chat_id, $user_id);
+        return new UnbanChatMember($this->_request, $chat_id, $user_id);
     }
 
     /**
@@ -560,7 +578,7 @@ class Methods
      */
     public function restrictChatMember(int|string $chat_id, int $user_id, string $permissions): RestrictChatMember
     {
-        return new RestrictChatMember($this->request, $chat_id, $user_id, $permissions);
+        return new RestrictChatMember($this->_request, $chat_id, $user_id, $permissions);
     }
 
     /**
@@ -573,7 +591,7 @@ class Methods
      */
     public function promoteChatMember(int|string $chat_id, int $user_id): PromoteChatMember
     {
-        return new PromoteChatMember($this->request, $chat_id, $user_id);
+        return new PromoteChatMember($this->_request, $chat_id, $user_id);
     }
 
     /**
@@ -587,7 +605,7 @@ class Methods
      */
     public function setChatAdministratorCustomTitle(int|string $chat_id, int $user_id, string $custom_title): SetChatAdministratorCustomTitle
     {
-        return new SetChatAdministratorCustomTitle($this->request, $chat_id, $user_id, $custom_title);
+        return new SetChatAdministratorCustomTitle($this->_request, $chat_id, $user_id, $custom_title);
     }
 
     /**
@@ -600,7 +618,7 @@ class Methods
      */
     public function banChatSenderChat(int|string $chat_id, int $sender_chat_id): BanChatSenderChat
     {
-        return new BanChatSenderChat($this->request, $chat_id, $sender_chat_id);
+        return new BanChatSenderChat($this->_request, $chat_id, $sender_chat_id);
     }
 
     /**
@@ -613,7 +631,7 @@ class Methods
      */
     public function unbanChatSenderChat(int|string $chat_id, int $sender_chat_id): UnbanChatSenderChat
     {
-        return new UnbanChatSenderChat($this->request, $chat_id, $sender_chat_id);
+        return new UnbanChatSenderChat($this->_request, $chat_id, $sender_chat_id);
     }
 
     /**
@@ -626,7 +644,7 @@ class Methods
      */
     public function setChatPermissions(int|string $chat_id, string $permissions): SetChatPermissions
     {
-        return new SetChatPermissions($this->request, $chat_id, $permissions);
+        return new SetChatPermissions($this->_request, $chat_id, $permissions);
     }
 
     /**
@@ -638,7 +656,7 @@ class Methods
      */
     public function exportChatInviteLink(int|string $chat_id): ExportChatInviteLink
     {
-        return new ExportChatInviteLink($this->request, $chat_id);
+        return new ExportChatInviteLink($this->_request, $chat_id);
     }
 
     /**
@@ -650,7 +668,7 @@ class Methods
      */
     public function createChatInviteLink(int|string $chat_id): CreateChatInviteLink
     {
-        return new CreateChatInviteLink($this->request, $chat_id);
+        return new CreateChatInviteLink($this->_request, $chat_id);
     }
 
     /**
@@ -663,7 +681,34 @@ class Methods
      */
     public function editChatInviteLink(int|string $chat_id, string $invite_link): EditChatInviteLink
     {
-        return new EditChatInviteLink($this->request, $chat_id, $invite_link);
+        return new EditChatInviteLink($this->_request, $chat_id, $invite_link);
+    }
+
+    /**
+     * Use this method to create a <a href="https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions">subscription invite link</a> for a channel chat. The bot must have the <em>can_invite_users</em> administrator rights. The link can be edited using the method <a href="https://core.telegram.org/bots/api#editchatsubscriptioninvitelink">editChatSubscriptionInviteLink</a> or revoked using the method <a href="https://core.telegram.org/bots/api#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as a <a href="https://core.telegram.org/bots/api#chatinvitelink">ChatInviteLink</a> object.
+     *
+     * @param int|string $chat_id
+     * @param int $subscription_period
+     * @param int $subscription_price
+     * @return mixed
+     * @link https://core.telegram.org/bots/api#createchatsubscriptioninvitelink
+     */
+    public function createChatSubscriptionInviteLink(int|string $chat_id, int $subscription_period, int $subscription_price): CreateChatSubscriptionInviteLink
+    {
+        return new CreateChatSubscriptionInviteLink($this->_request, $chat_id, $subscription_period, $subscription_price);
+    }
+
+    /**
+     * Use this method to edit a subscription invite link created by the bot. The bot must have the <em>can_invite_users</em> administrator rights. Returns the edited invite link as a <a href="https://core.telegram.org/bots/api#chatinvitelink">ChatInviteLink</a> object.
+     *
+     * @param int|string $chat_id
+     * @param string $invite_link
+     * @return mixed
+     * @link https://core.telegram.org/bots/api#editchatsubscriptioninvitelink
+     */
+    public function editChatSubscriptionInviteLink(int|string $chat_id, string $invite_link): EditChatSubscriptionInviteLink
+    {
+        return new EditChatSubscriptionInviteLink($this->_request, $chat_id, $invite_link);
     }
 
     /**
@@ -676,7 +721,7 @@ class Methods
      */
     public function revokeChatInviteLink(int|string $chat_id, string $invite_link): RevokeChatInviteLink
     {
-        return new RevokeChatInviteLink($this->request, $chat_id, $invite_link);
+        return new RevokeChatInviteLink($this->_request, $chat_id, $invite_link);
     }
 
     /**
@@ -689,7 +734,7 @@ class Methods
      */
     public function approveChatJoinRequest(int|string $chat_id, int $user_id): ApproveChatJoinRequest
     {
-        return new ApproveChatJoinRequest($this->request, $chat_id, $user_id);
+        return new ApproveChatJoinRequest($this->_request, $chat_id, $user_id);
     }
 
     /**
@@ -702,7 +747,7 @@ class Methods
      */
     public function declineChatJoinRequest(int|string $chat_id, int $user_id): DeclineChatJoinRequest
     {
-        return new DeclineChatJoinRequest($this->request, $chat_id, $user_id);
+        return new DeclineChatJoinRequest($this->_request, $chat_id, $user_id);
     }
 
     /**
@@ -715,7 +760,7 @@ class Methods
      */
     public function setChatPhoto(int|string $chat_id, mixed $photo): SetChatPhoto
     {
-        return new SetChatPhoto($this->request, $chat_id, $photo);
+        return new SetChatPhoto($this->_request, $chat_id, $photo);
     }
 
     /**
@@ -727,7 +772,7 @@ class Methods
      */
     public function deleteChatPhoto(int|string $chat_id): DeleteChatPhoto
     {
-        return new DeleteChatPhoto($this->request, $chat_id);
+        return new DeleteChatPhoto($this->_request, $chat_id);
     }
 
     /**
@@ -740,7 +785,7 @@ class Methods
      */
     public function setChatTitle(int|string $chat_id, string $title): SetChatTitle
     {
-        return new SetChatTitle($this->request, $chat_id, $title);
+        return new SetChatTitle($this->_request, $chat_id, $title);
     }
 
     /**
@@ -752,7 +797,7 @@ class Methods
      */
     public function setChatDescription(int|string $chat_id): SetChatDescription
     {
-        return new SetChatDescription($this->request, $chat_id);
+        return new SetChatDescription($this->_request, $chat_id);
     }
 
     /**
@@ -765,7 +810,7 @@ class Methods
      */
     public function pinChatMessage(int|string $chat_id, int $message_id): PinChatMessage
     {
-        return new PinChatMessage($this->request, $chat_id, $message_id);
+        return new PinChatMessage($this->_request, $chat_id, $message_id);
     }
 
     /**
@@ -777,7 +822,7 @@ class Methods
      */
     public function unpinChatMessage(int|string $chat_id): UnpinChatMessage
     {
-        return new UnpinChatMessage($this->request, $chat_id);
+        return new UnpinChatMessage($this->_request, $chat_id);
     }
 
     /**
@@ -789,7 +834,7 @@ class Methods
      */
     public function unpinAllChatMessages(int|string $chat_id): UnpinAllChatMessages
     {
-        return new UnpinAllChatMessages($this->request, $chat_id);
+        return new UnpinAllChatMessages($this->_request, $chat_id);
     }
 
     /**
@@ -801,7 +846,7 @@ class Methods
      */
     public function leaveChat(int|string $chat_id): LeaveChat
     {
-        return new LeaveChat($this->request, $chat_id);
+        return new LeaveChat($this->_request, $chat_id);
     }
 
     /**
@@ -813,7 +858,7 @@ class Methods
      */
     public function getChat(int|string $chat_id): GetChat
     {
-        return new GetChat($this->request, $chat_id);
+        return new GetChat($this->_request, $chat_id);
     }
 
     /**
@@ -825,7 +870,7 @@ class Methods
      */
     public function getChatAdministrators(int|string $chat_id): GetChatAdministrators
     {
-        return new GetChatAdministrators($this->request, $chat_id);
+        return new GetChatAdministrators($this->_request, $chat_id);
     }
 
     /**
@@ -837,7 +882,7 @@ class Methods
      */
     public function getChatMemberCount(int|string $chat_id): GetChatMemberCount
     {
-        return new GetChatMemberCount($this->request, $chat_id);
+        return new GetChatMemberCount($this->_request, $chat_id);
     }
 
     /**
@@ -850,7 +895,7 @@ class Methods
      */
     public function getChatMember(int|string $chat_id, int $user_id): GetChatMember
     {
-        return new GetChatMember($this->request, $chat_id, $user_id);
+        return new GetChatMember($this->_request, $chat_id, $user_id);
     }
 
     /**
@@ -863,7 +908,7 @@ class Methods
      */
     public function setChatStickerSet(int|string $chat_id, string $sticker_set_name): SetChatStickerSet
     {
-        return new SetChatStickerSet($this->request, $chat_id, $sticker_set_name);
+        return new SetChatStickerSet($this->_request, $chat_id, $sticker_set_name);
     }
 
     /**
@@ -875,7 +920,7 @@ class Methods
      */
     public function deleteChatStickerSet(int|string $chat_id): DeleteChatStickerSet
     {
-        return new DeleteChatStickerSet($this->request, $chat_id);
+        return new DeleteChatStickerSet($this->_request, $chat_id);
     }
 
     /**
@@ -888,7 +933,7 @@ class Methods
      */
     public function getForumTopicIconStickers(): GetForumTopicIconStickers
     {
-        return new GetForumTopicIconStickers($this->request);
+        return new GetForumTopicIconStickers($this->_request);
     }
 
     /**
@@ -901,11 +946,11 @@ class Methods
      */
     public function createForumTopic(int|string $chat_id, string $name): CreateForumTopic
     {
-        return new CreateForumTopic($this->request, $chat_id, $name);
+        return new CreateForumTopic($this->_request, $chat_id, $name);
     }
 
     /**
-     * Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.
+     * Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.
      *
      * @param int|string $chat_id
      * @param int $message_thread_id
@@ -914,7 +959,7 @@ class Methods
      */
     public function editForumTopic(int|string $chat_id, int $message_thread_id): EditForumTopic
     {
-        return new EditForumTopic($this->request, $chat_id, $message_thread_id);
+        return new EditForumTopic($this->_request, $chat_id, $message_thread_id);
     }
 
     /**
@@ -927,7 +972,7 @@ class Methods
      */
     public function closeForumTopic(int|string $chat_id, int $message_thread_id): CloseForumTopic
     {
-        return new CloseForumTopic($this->request, $chat_id, $message_thread_id);
+        return new CloseForumTopic($this->_request, $chat_id, $message_thread_id);
     }
 
     /**
@@ -940,7 +985,7 @@ class Methods
      */
     public function reopenForumTopic(int|string $chat_id, int $message_thread_id): ReopenForumTopic
     {
-        return new ReopenForumTopic($this->request, $chat_id, $message_thread_id);
+        return new ReopenForumTopic($this->_request, $chat_id, $message_thread_id);
     }
 
     /**
@@ -953,7 +998,7 @@ class Methods
      */
     public function deleteForumTopic(int|string $chat_id, int $message_thread_id): DeleteForumTopic
     {
-        return new DeleteForumTopic($this->request, $chat_id, $message_thread_id);
+        return new DeleteForumTopic($this->_request, $chat_id, $message_thread_id);
     }
 
     /**
@@ -966,11 +1011,11 @@ class Methods
      */
     public function unpinAllForumTopicMessages(int|string $chat_id, int $message_thread_id): UnpinAllForumTopicMessages
     {
-        return new UnpinAllForumTopicMessages($this->request, $chat_id, $message_thread_id);
+        return new UnpinAllForumTopicMessages($this->_request, $chat_id, $message_thread_id);
     }
 
     /**
-     * Use this method to edit the name of the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.
+     * Use this method to edit the name of the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.
      *
      * @param int|string $chat_id
      * @param string $name
@@ -979,7 +1024,7 @@ class Methods
      */
     public function editGeneralForumTopic(int|string $chat_id, string $name): EditGeneralForumTopic
     {
-        return new EditGeneralForumTopic($this->request, $chat_id, $name);
+        return new EditGeneralForumTopic($this->_request, $chat_id, $name);
     }
 
     /**
@@ -991,7 +1036,7 @@ class Methods
      */
     public function closeGeneralForumTopic(int|string $chat_id): CloseGeneralForumTopic
     {
-        return new CloseGeneralForumTopic($this->request, $chat_id);
+        return new CloseGeneralForumTopic($this->_request, $chat_id);
     }
 
     /**
@@ -1003,7 +1048,7 @@ class Methods
      */
     public function reopenGeneralForumTopic(int|string $chat_id): ReopenGeneralForumTopic
     {
-        return new ReopenGeneralForumTopic($this->request, $chat_id);
+        return new ReopenGeneralForumTopic($this->_request, $chat_id);
     }
 
     /**
@@ -1015,7 +1060,7 @@ class Methods
      */
     public function hideGeneralForumTopic(int|string $chat_id): HideGeneralForumTopic
     {
-        return new HideGeneralForumTopic($this->request, $chat_id);
+        return new HideGeneralForumTopic($this->_request, $chat_id);
     }
 
     /**
@@ -1027,7 +1072,7 @@ class Methods
      */
     public function unhideGeneralForumTopic(int|string $chat_id): UnhideGeneralForumTopic
     {
-        return new UnhideGeneralForumTopic($this->request, $chat_id);
+        return new UnhideGeneralForumTopic($this->_request, $chat_id);
     }
 
     /**
@@ -1039,7 +1084,7 @@ class Methods
      */
     public function unpinAllGeneralForumTopicMessages(int|string $chat_id): UnpinAllGeneralForumTopicMessages
     {
-        return new UnpinAllGeneralForumTopicMessages($this->request, $chat_id);
+        return new UnpinAllGeneralForumTopicMessages($this->_request, $chat_id);
     }
 
     /**
@@ -1051,7 +1096,7 @@ class Methods
      */
     public function answerCallbackQuery(string $callback_query_id): AnswerCallbackQuery
     {
-        return new AnswerCallbackQuery($this->request, $callback_query_id);
+        return new AnswerCallbackQuery($this->_request, $callback_query_id);
     }
 
     /**
@@ -1064,7 +1109,7 @@ class Methods
      */
     public function getUserChatBoosts(int|string $chat_id, int $user_id): GetUserChatBoosts
     {
-        return new GetUserChatBoosts($this->request, $chat_id, $user_id);
+        return new GetUserChatBoosts($this->_request, $chat_id, $user_id);
     }
 
     /**
@@ -1076,7 +1121,7 @@ class Methods
      */
     public function getBusinessConnection(string $business_connection_id): GetBusinessConnection
     {
-        return new GetBusinessConnection($this->request, $business_connection_id);
+        return new GetBusinessConnection($this->_request, $business_connection_id);
     }
 
     /**
@@ -1088,7 +1133,7 @@ class Methods
      */
     public function setMyCommands(string  $commands): SetMyCommands
     {
-        return new SetMyCommands($this->request, $commands);
+        return new SetMyCommands($this->_request, $commands);
     }
 
     /**
@@ -1101,7 +1146,7 @@ class Methods
      */
     public function deleteMyCommands(): DeleteMyCommands
     {
-        return new DeleteMyCommands($this->request);
+        return new DeleteMyCommands($this->_request);
     }
 
     /**
@@ -1114,7 +1159,7 @@ class Methods
      */
     public function getMyCommands(): GetMyCommands
     {
-        return new GetMyCommands($this->request);
+        return new GetMyCommands($this->_request);
     }
 
     /**
@@ -1127,7 +1172,7 @@ class Methods
      */
     public function setMyName(): SetMyName
     {
-        return new SetMyName($this->request);
+        return new SetMyName($this->_request);
     }
 
     /**
@@ -1140,7 +1185,7 @@ class Methods
      */
     public function getMyName(): GetMyName
     {
-        return new GetMyName($this->request);
+        return new GetMyName($this->_request);
     }
 
     /**
@@ -1153,7 +1198,7 @@ class Methods
      */
     public function setMyDescription(): SetMyDescription
     {
-        return new SetMyDescription($this->request);
+        return new SetMyDescription($this->_request);
     }
 
     /**
@@ -1166,7 +1211,7 @@ class Methods
      */
     public function getMyDescription(): GetMyDescription
     {
-        return new GetMyDescription($this->request);
+        return new GetMyDescription($this->_request);
     }
 
     /**
@@ -1179,7 +1224,7 @@ class Methods
      */
     public function setMyShortDescription(): SetMyShortDescription
     {
-        return new SetMyShortDescription($this->request);
+        return new SetMyShortDescription($this->_request);
     }
 
     /**
@@ -1192,7 +1237,7 @@ class Methods
      */
     public function getMyShortDescription(): GetMyShortDescription
     {
-        return new GetMyShortDescription($this->request);
+        return new GetMyShortDescription($this->_request);
     }
 
     /**
@@ -1205,7 +1250,7 @@ class Methods
      */
     public function setChatMenuButton(): SetChatMenuButton
     {
-        return new SetChatMenuButton($this->request);
+        return new SetChatMenuButton($this->_request);
     }
 
     /**
@@ -1218,7 +1263,7 @@ class Methods
      */
     public function getChatMenuButton(): GetChatMenuButton
     {
-        return new GetChatMenuButton($this->request);
+        return new GetChatMenuButton($this->_request);
     }
 
     /**
@@ -1231,7 +1276,7 @@ class Methods
      */
     public function setMyDefaultAdministratorRights(): SetMyDefaultAdministratorRights
     {
-        return new SetMyDefaultAdministratorRights($this->request);
+        return new SetMyDefaultAdministratorRights($this->_request);
     }
 
     /**
@@ -1244,11 +1289,11 @@ class Methods
      */
     public function getMyDefaultAdministratorRights(): GetMyDefaultAdministratorRights
     {
-        return new GetMyDefaultAdministratorRights($this->request);
+        return new GetMyDefaultAdministratorRights($this->_request);
     }
 
     /**
-     * Use this method to edit text and <a href="https://core.telegram.org/bots/api#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="https://core.telegram.org/bots/api#message">Message</a> is returned, otherwise <em>True</em> is returned.
+     * Use this method to edit text and <a href="https://core.telegram.org/bots/api#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="https://core.telegram.org/bots/api#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
      *
      * @param string $text
      * @return mixed
@@ -1256,11 +1301,11 @@ class Methods
      */
     public function editMessageText(string $text): EditMessageText
     {
-        return new EditMessageText($this->request, $text);
+        return new EditMessageText($this->_request, $text);
     }
 
     /**
-     * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited <a href="https://core.telegram.org/bots/api#message">Message</a> is returned, otherwise <em>True</em> is returned.
+     * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited <a href="https://core.telegram.org/bots/api#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
      *
      *
 
@@ -1269,11 +1314,11 @@ class Methods
      */
     public function editMessageCaption(): EditMessageCaption
     {
-        return new EditMessageCaption($this->request);
+        return new EditMessageCaption($this->_request);
     }
 
     /**
-     * Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited <a href="https://core.telegram.org/bots/api#message">Message</a> is returned, otherwise <em>True</em> is returned.
+     * Use this method to edit animation, audio, document, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited <a href="https://core.telegram.org/bots/api#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
      *
      * @param string $media
      * @return mixed
@@ -1281,7 +1326,7 @@ class Methods
      */
     public function editMessageMedia(string $media): EditMessageMedia
     {
-        return new EditMessageMedia($this->request, $media);
+        return new EditMessageMedia($this->_request, $media);
     }
 
     /**
@@ -1294,7 +1339,7 @@ class Methods
      */
     public function editMessageLiveLocation(Float $latitude, Float $longitude): EditMessageLiveLocation
     {
-        return new EditMessageLiveLocation($this->request, $latitude, $longitude);
+        return new EditMessageLiveLocation($this->_request, $latitude, $longitude);
     }
 
     /**
@@ -1307,11 +1352,11 @@ class Methods
      */
     public function stopMessageLiveLocation(): StopMessageLiveLocation
     {
-        return new StopMessageLiveLocation($this->request);
+        return new StopMessageLiveLocation($this->_request);
     }
 
     /**
-     * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited <a href="https://core.telegram.org/bots/api#message">Message</a> is returned, otherwise <em>True</em> is returned.
+     * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited <a href="https://core.telegram.org/bots/api#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
      *
      *
 
@@ -1320,7 +1365,7 @@ class Methods
      */
     public function editMessageReplyMarkup(): EditMessageReplyMarkup
     {
-        return new EditMessageReplyMarkup($this->request);
+        return new EditMessageReplyMarkup($this->_request);
     }
 
     /**
@@ -1333,7 +1378,7 @@ class Methods
      */
     public function stopPoll(int|string $chat_id, int $message_id): StopPoll
     {
-        return new StopPoll($this->request, $chat_id, $message_id);
+        return new StopPoll($this->_request, $chat_id, $message_id);
     }
 
     /**
@@ -1346,7 +1391,7 @@ class Methods
      */
     public function deleteMessage(int|string $chat_id, int $message_id): DeleteMessage
     {
-        return new DeleteMessage($this->request, $chat_id, $message_id);
+        return new DeleteMessage($this->_request, $chat_id, $message_id);
     }
 
     /**
@@ -1359,7 +1404,7 @@ class Methods
      */
     public function deleteMessages(int|string $chat_id, string  $message_ids): DeleteMessages
     {
-        return new DeleteMessages($this->request, $chat_id, $message_ids);
+        return new DeleteMessages($this->_request, $chat_id, $message_ids);
     }
 
     /**
@@ -1372,7 +1417,7 @@ class Methods
      */
     public function sendSticker(int|string $chat_id, mixed $sticker): SendSticker
     {
-        return new SendSticker($this->request, $chat_id, $sticker);
+        return new SendSticker($this->_request, $chat_id, $sticker);
     }
 
     /**
@@ -1384,7 +1429,7 @@ class Methods
      */
     public function getStickerSet(string $name): GetStickerSet
     {
-        return new GetStickerSet($this->request, $name);
+        return new GetStickerSet($this->_request, $name);
     }
 
     /**
@@ -1396,7 +1441,7 @@ class Methods
      */
     public function getCustomEmojiStickers(string  $custom_emoji_ids): GetCustomEmojiStickers
     {
-        return new GetCustomEmojiStickers($this->request, $custom_emoji_ids);
+        return new GetCustomEmojiStickers($this->_request, $custom_emoji_ids);
     }
 
     /**
@@ -1410,7 +1455,7 @@ class Methods
      */
     public function uploadStickerFile(int $user_id, mixed $sticker, string $sticker_format): UploadStickerFile
     {
-        return new UploadStickerFile($this->request, $user_id, $sticker, $sticker_format);
+        return new UploadStickerFile($this->_request, $user_id, $sticker, $sticker_format);
     }
 
     /**
@@ -1425,7 +1470,7 @@ class Methods
      */
     public function createNewStickerSet(int $user_id, string $name, string $title, string  $stickers): CreateNewStickerSet
     {
-        return new CreateNewStickerSet($this->request, $user_id, $name, $title, $stickers);
+        return new CreateNewStickerSet($this->_request, $user_id, $name, $title, $stickers);
     }
 
     /**
@@ -1439,7 +1484,7 @@ class Methods
      */
     public function addStickerToSet(int $user_id, string $name, string $sticker): AddStickerToSet
     {
-        return new AddStickerToSet($this->request, $user_id, $name, $sticker);
+        return new AddStickerToSet($this->_request, $user_id, $name, $sticker);
     }
 
     /**
@@ -1452,7 +1497,7 @@ class Methods
      */
     public function setStickerPositionInSet(string $sticker, int $position): SetStickerPositionInSet
     {
-        return new SetStickerPositionInSet($this->request, $sticker, $position);
+        return new SetStickerPositionInSet($this->_request, $sticker, $position);
     }
 
     /**
@@ -1464,7 +1509,7 @@ class Methods
      */
     public function deleteStickerFromSet(string $sticker): DeleteStickerFromSet
     {
-        return new DeleteStickerFromSet($this->request, $sticker);
+        return new DeleteStickerFromSet($this->_request, $sticker);
     }
 
     /**
@@ -1479,7 +1524,7 @@ class Methods
      */
     public function replaceStickerInSet(int $user_id, string $name, string $old_sticker, string $sticker): ReplaceStickerInSet
     {
-        return new ReplaceStickerInSet($this->request, $user_id, $name, $old_sticker, $sticker);
+        return new ReplaceStickerInSet($this->_request, $user_id, $name, $old_sticker, $sticker);
     }
 
     /**
@@ -1492,7 +1537,7 @@ class Methods
      */
     public function setStickerEmojiList(string $sticker, string  $emoji_list): SetStickerEmojiList
     {
-        return new SetStickerEmojiList($this->request, $sticker, $emoji_list);
+        return new SetStickerEmojiList($this->_request, $sticker, $emoji_list);
     }
 
     /**
@@ -1504,7 +1549,7 @@ class Methods
      */
     public function setStickerKeywords(string $sticker): SetStickerKeywords
     {
-        return new SetStickerKeywords($this->request, $sticker);
+        return new SetStickerKeywords($this->_request, $sticker);
     }
 
     /**
@@ -1516,7 +1561,7 @@ class Methods
      */
     public function setStickerMaskPosition(string $sticker): SetStickerMaskPosition
     {
-        return new SetStickerMaskPosition($this->request, $sticker);
+        return new SetStickerMaskPosition($this->_request, $sticker);
     }
 
     /**
@@ -1529,7 +1574,7 @@ class Methods
      */
     public function setStickerSetTitle(string $name, string $title): SetStickerSetTitle
     {
-        return new SetStickerSetTitle($this->request, $name, $title);
+        return new SetStickerSetTitle($this->_request, $name, $title);
     }
 
     /**
@@ -1543,7 +1588,7 @@ class Methods
      */
     public function setStickerSetThumbnail(string $name, int $user_id, string $format): SetStickerSetThumbnail
     {
-        return new SetStickerSetThumbnail($this->request, $name, $user_id, $format);
+        return new SetStickerSetThumbnail($this->_request, $name, $user_id, $format);
     }
 
     /**
@@ -1555,7 +1600,7 @@ class Methods
      */
     public function setCustomEmojiStickerSetThumbnail(string $name): SetCustomEmojiStickerSetThumbnail
     {
-        return new SetCustomEmojiStickerSetThumbnail($this->request, $name);
+        return new SetCustomEmojiStickerSetThumbnail($this->_request, $name);
     }
 
     /**
@@ -1567,7 +1612,7 @@ class Methods
      */
     public function deleteStickerSet(string $name): DeleteStickerSet
     {
-        return new DeleteStickerSet($this->request, $name);
+        return new DeleteStickerSet($this->_request, $name);
     }
 
     /**
@@ -1580,7 +1625,7 @@ class Methods
      */
     public function answerInlineQuery(string $inline_query_id, string  $results): AnswerInlineQuery
     {
-        return new AnswerInlineQuery($this->request, $inline_query_id, $results);
+        return new AnswerInlineQuery($this->_request, $inline_query_id, $results);
     }
 
     /**
@@ -1593,7 +1638,7 @@ class Methods
      */
     public function answerWebAppQuery(string $web_app_query_id, string $result): AnswerWebAppQuery
     {
-        return new AnswerWebAppQuery($this->request, $web_app_query_id, $result);
+        return new AnswerWebAppQuery($this->_request, $web_app_query_id, $result);
     }
 
     /**
@@ -1610,7 +1655,7 @@ class Methods
      */
     public function sendInvoice(int|string $chat_id, string $title, string $description, string $payload, string $currency, string  $prices): SendInvoice
     {
-        return new SendInvoice($this->request, $chat_id, $title, $description, $payload, $currency, $prices);
+        return new SendInvoice($this->_request, $chat_id, $title, $description, $payload, $currency, $prices);
     }
 
     /**
@@ -1626,7 +1671,7 @@ class Methods
      */
     public function createInvoiceLink(string $title, string $description, string $payload, string $currency, string  $prices): CreateInvoiceLink
     {
-        return new CreateInvoiceLink($this->request, $title, $description, $payload, $currency, $prices);
+        return new CreateInvoiceLink($this->_request, $title, $description, $payload, $currency, $prices);
     }
 
     /**
@@ -1639,7 +1684,7 @@ class Methods
      */
     public function answerShippingQuery(string $shipping_query_id, bool $ok): AnswerShippingQuery
     {
-        return new AnswerShippingQuery($this->request, $shipping_query_id, $ok);
+        return new AnswerShippingQuery($this->_request, $shipping_query_id, $ok);
     }
 
     /**
@@ -1652,7 +1697,20 @@ class Methods
      */
     public function answerPreCheckoutQuery(string $pre_checkout_query_id, bool $ok): AnswerPreCheckoutQuery
     {
-        return new AnswerPreCheckoutQuery($this->request, $pre_checkout_query_id, $ok);
+        return new AnswerPreCheckoutQuery($this->_request, $pre_checkout_query_id, $ok);
+    }
+
+    /**
+     * Returns the bot&#39;s Telegram Star transactions in chronological order. On success, returns a <a href="https://core.telegram.org/bots/api#startransactions">StarTransactions</a> object.
+     *
+     *
+
+     * @return mixed
+     * @link https://core.telegram.org/bots/api#getstartransactions
+     */
+    public function getStarTransactions(): GetStarTransactions
+    {
+        return new GetStarTransactions($this->_request);
     }
 
     /**
@@ -1665,7 +1723,7 @@ class Methods
      */
     public function refundStarPayment(int $user_id, string $telegram_payment_charge_id): RefundStarPayment
     {
-        return new RefundStarPayment($this->request, $user_id, $telegram_payment_charge_id);
+        return new RefundStarPayment($this->_request, $user_id, $telegram_payment_charge_id);
     }
 
     /**
@@ -1678,7 +1736,7 @@ class Methods
      */
     public function setPassportDataErrors(int $user_id, string  $errors): SetPassportDataErrors
     {
-        return new SetPassportDataErrors($this->request, $user_id, $errors);
+        return new SetPassportDataErrors($this->_request, $user_id, $errors);
     }
 
     /**
@@ -1691,7 +1749,7 @@ class Methods
      */
     public function sendGame(int $chat_id, string $game_short_name): SendGame
     {
-        return new SendGame($this->request, $chat_id, $game_short_name);
+        return new SendGame($this->_request, $chat_id, $game_short_name);
     }
 
     /**
@@ -1704,7 +1762,7 @@ class Methods
      */
     public function setGameScore(int $user_id, int $score): SetGameScore
     {
-        return new SetGameScore($this->request, $user_id, $score);
+        return new SetGameScore($this->_request, $user_id, $score);
     }
 
     /**
@@ -1716,6 +1774,6 @@ class Methods
      */
     public function getGameHighScores(int $user_id): GetGameHighScores
     {
-        return new GetGameHighScores($this->request, $user_id);
+        return new GetGameHighScores($this->_request, $user_id);
     }
 }

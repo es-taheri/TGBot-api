@@ -22,7 +22,7 @@ class CopyMessages
     private bool $disable_notification;
     private bool $protect_content;
     private bool $remove_caption;
-    
+
     public function __construct(Request $request, int|string $chat_id, int|string $from_chat_id, string  $message_ids)
     {
         $this->_request = $request;

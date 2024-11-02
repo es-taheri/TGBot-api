@@ -11,7 +11,7 @@ class GetFile
     private bool $_returned = false;
     private bool $_sent = false;
     private string $file_id;
-    
+
     public function __construct(Request $request, string $file_id)
     {
         $this->_request = $request;

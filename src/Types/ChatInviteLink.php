@@ -13,6 +13,8 @@ class ChatInviteLink
     public int $expire_date;
     public int $member_limit;
     public int $pending_join_request_count;
+    public int $subscription_period;
+    public int $subscription_price;
     
     public function __construct(array $update)
     {

@@ -7,6 +7,7 @@ class GiveawayCompleted
     public int $winner_count;
     public int $unclaimed_prize_count;
     public Message $giveaway_message;
+    public True $is_star_giveaway;
     
     public function __construct(array $update)
     {

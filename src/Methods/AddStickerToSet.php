@@ -13,7 +13,7 @@ class AddStickerToSet
     private int $user_id;
     private string $name;
     private string $sticker;
-    
+
     public function __construct(Request $request, int $user_id, string $name, string $sticker)
     {
         $this->_request = $request;

@@ -5,7 +5,7 @@ namespace EasyTel\Methods;
 use EasyTel\Handler\Request;
 
 /**
- * @method SetMessageReaction reaction(string  $value) A JSON-serialized list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators.
+ * @method SetMessageReaction reaction(string  $value) A JSON-serialized list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can&#39;t be used by bots.
  * @method SetMessageReaction is_big(bool $value) Pass <em>True</em> to set the reaction with a big animation
  */
 class SetMessageReaction
@@ -17,7 +17,7 @@ class SetMessageReaction
     private int $message_id;
     private string  $reaction;
     private bool $is_big;
-    
+
     public function __construct(Request $request, int|string $chat_id, int $message_id)
     {
         $this->_request = $request;

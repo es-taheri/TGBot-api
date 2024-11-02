@@ -15,7 +15,7 @@ class SetMyShortDescription
     private bool $_sent = false;
     private string $short_description;
     private string $language_code;
-    
+
     public function __construct(Request $request)
     {
         $this->_request = $request;

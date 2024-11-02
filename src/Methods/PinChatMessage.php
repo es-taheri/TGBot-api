@@ -5,6 +5,7 @@ namespace EasyTel\Methods;
 use EasyTel\Handler\Request;
 
 /**
+ * @method PinChatMessage business_connection_id(string $value) Unique identifier of the business connection on behalf of which the message will be pinned
  * @method PinChatMessage disable_notification(bool $value) Pass <em>True</em> if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.
  */
 class PinChatMessage
@@ -14,8 +15,9 @@ class PinChatMessage
     private bool $_sent = false;
     private int|string $chat_id;
     private int $message_id;
+    private string $business_connection_id;
     private bool $disable_notification;
-    
+
     public function __construct(Request $request, int|string $chat_id, int $message_id)
     {
         $this->_request = $request;
