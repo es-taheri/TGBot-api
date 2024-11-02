@@ -135,12 +135,12 @@ use EasyTel\Methods\GetGameHighScores;
 
 class Methods
 {
-    private Request $request;
+    private Request $_request;
     public function __construct(
         Client $guzzle, string $method = 'POST', $output = Telegram::OUTPUT_OBJECT
     )
     {
-        $this->request = new Request($guzzle,$method,$output);
+        $this->_request = new Request($guzzle,$method,$output);
     }
 
     
