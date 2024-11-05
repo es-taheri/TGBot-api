@@ -2,11 +2,10 @@
 
 namespace EasyTel\Types;
 
-class ReactionType
+class TransactionPartnerFragment
 {
-    public ReactionTypeEmoji $reactiontypeemoji;
-    public ReactionTypeCustomEmoji $reactiontypecustomemoji;
-    public ReactionTypePaid $reactiontypepaid;
+    public string $type;
+    public RevenueWithdrawalState $withdrawal_state;
     
     public function __construct(array $update)
     {
@@ -19,8 +18,6 @@ class ReactionType
                 if (in_array($type, ['mixed', 'True', 'string', 'bool', 'int', 'float', 'array'])) $this->{$object} = $update[$object];
             endif;
         endforeach;
-        $this->reactiontypeemoji = new ReactionTypeEmoji($update);
-        $this->reactiontypecustomemoji = new ReactionTypeCustomEmoji($update);
-        $this->reactiontypepaid = new ReactionTypePaid($update);
+        if (isset($update['withdrawal_state'])) $this->withdrawal_state = new RevenueWithdrawalState($update['withdrawal_state']);
     }
 }

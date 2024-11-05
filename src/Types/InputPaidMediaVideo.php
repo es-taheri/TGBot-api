@@ -2,11 +2,15 @@
 
 namespace EasyTel\Types;
 
-class ReactionType
+class InputPaidMediaVideo
 {
-    public ReactionTypeEmoji $reactiontypeemoji;
-    public ReactionTypeCustomEmoji $reactiontypecustomemoji;
-    public ReactionTypePaid $reactiontypepaid;
+    public string $type;
+    public string $media;
+    public mixed $thumbnail;
+    public int $width;
+    public int $height;
+    public int $duration;
+    public bool $supports_streaming;
     
     public function __construct(array $update)
     {
@@ -19,8 +23,6 @@ class ReactionType
                 if (in_array($type, ['mixed', 'True', 'string', 'bool', 'int', 'float', 'array'])) $this->{$object} = $update[$object];
             endif;
         endforeach;
-        $this->reactiontypeemoji = new ReactionTypeEmoji($update);
-        $this->reactiontypecustomemoji = new ReactionTypeCustomEmoji($update);
-        $this->reactiontypepaid = new ReactionTypePaid($update);
+        
     }
 }

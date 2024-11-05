@@ -4,7 +4,11 @@ namespace EasyTel\Types;
 
 class InputMessageContent
 {
-    
+    public InputTextMessageContent $inputtextmessagecontent;
+    public InputLocationMessageContent $inputlocationmessagecontent;
+    public InputVenueMessageContent $inputvenuemessagecontent;
+    public InputContactMessageContent $inputcontactmessagecontent;
+    public InputInvoiceMessageContent $inputinvoicemessagecontent;
     
     public function __construct(array $update)
     {
@@ -17,6 +21,10 @@ class InputMessageContent
                 if (in_array($type, ['mixed', 'True', 'string', 'bool', 'int', 'float', 'array'])) $this->{$object} = $update[$object];
             endif;
         endforeach;
-        
+        $this->inputtextmessagecontent = new InputTextMessageContent($update);
+        $this->inputlocationmessagecontent = new InputLocationMessageContent($update);
+        $this->inputvenuemessagecontent = new InputVenueMessageContent($update);
+        $this->inputcontactmessagecontent = new InputContactMessageContent($update);
+        $this->inputinvoicemessagecontent = new InputInvoiceMessageContent($update);
     }
 }
