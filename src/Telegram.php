@@ -17,7 +17,7 @@ class Telegram
     public int $output;
 
     public function __construct(
-        string $TG_BOT_TOKEN, string|null $UPDATES, string $TG_BOTAPI_URL = 'https://api.telegram.org',
+        string $TG_BOT_TOKEN, string|null $UPDATES = null, string $TG_BOTAPI_URL = 'https://api.telegram.org',
         string $TG_REQUEST_METHOD = 'POST', array $guzzle_client_options = [], string $output = self::OUTPUT_OBJECT
     )
     {
